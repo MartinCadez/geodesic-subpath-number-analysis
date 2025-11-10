@@ -1,0 +1,33 @@
+Graph features:
+- undirected	
+- unweighted	
+- connected	
+- simple (aka no loops or multiple edges between nodes)
+- finite
+
+- bipartite graph
+  - rule 1: have two disjoint and independent sets (parts) with vertices
+  - rule 2: each edge connects two vertices from two sets (parts)
+  - eq: does not contain odd length cycles
+  - interest only in connected graphs => only one partition
+  special labels:
+  - balanced: cardinality of those two sets is the same
+  - biregular: each vertex have the same degree
+  conventions:
+  - labels for parts: U, V 
+  - label for graph: G = (U, V, E)
+  used:
+  https://github.com/jamesross2/random_graph
+
+
+Subpath count details:
+- count trivial paths (single-vertex paths)
+- simple paths only (aka paths cannot repeat vertices more then once)
+
+3 subcategories of graphs:
+- also known as three-regular graph
+- cubic graphs: every vertex has degree of 3 (3 edges for each node)
+- n nodes implies 3/2 * \cdot edges
+- constrains:
+  - simple cubic have 
+  -  
