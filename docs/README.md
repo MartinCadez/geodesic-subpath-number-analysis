@@ -30,7 +30,7 @@ need to update ab graph theory graphs etc.
     ```bash
     docker compose up -d
     ```
-    2. 🖥️ Interactive Access to SageMath Container
+    2. 🖥️ Shell Access to SageMath Container
     ```bash
     docker compose exec sagemath bash
     ```
@@ -49,7 +49,7 @@ the host are immediately reflected inside the container, and vice versa.
 > docker ps --filter "name=sagemath-dev"
 > ``````
 
-- 🚀 Run Simulation
+- 🚀 Run Simulation Within Container 
     ```bash
     sage -python src/main.py
     ```
