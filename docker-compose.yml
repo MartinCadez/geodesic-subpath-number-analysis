@@ -1,0 +1,8 @@
+services:
+  sagemath:
+    build: .
+    container_name: sagemath-dev
+    stdin_open: true
+    tty: true
+    volumes:
+      - .:/home/sage/sage/repo
