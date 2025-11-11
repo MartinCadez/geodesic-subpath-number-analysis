@@ -18,6 +18,15 @@ Graph features:
   - label for graph: G = (U, V, E)
   used:
   https://github.com/jamesross2/random_graph
+  https://en.wikipedia.org/wiki/Bipartite_graph
+  https://www.youtube.com/watch?v=bZBmN7I7GNQ
+
+- triangle-free graph
+ - rule 1:
+ used:
+ https://www.youtube.com/watch?v=uxm0i5O4u_w
+
+
 
 
 Subpath count details:
@@ -30,4 +39,7 @@ Subpath count details:
 - n nodes implies 3/2 * \cdot edges
 - constrains:
   - simple cubic have 
-  -  
+  -
+use:
+docker compose up -d 
+docker run 
