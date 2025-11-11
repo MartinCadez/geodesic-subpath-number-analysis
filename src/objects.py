@@ -139,6 +139,7 @@ class BipartiteGraph:
         else:
             plt.show()
 
+
 if __name__ == "__main__":
     G = BipartiteGraph(num_u=3, num_v=2, num_edges=4)
     print(G)
