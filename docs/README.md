@@ -2,7 +2,7 @@
 [![Docker Compatibility](https://img.shields.io/badge/Docker-20.10%2B-0db7ed)](https://docs.docker.com)
 [![Docker Compose Compatibility](https://img.shields.io/badge/Docker_Compose-2.0%2B-1ad1b9)](https://docs.docker.com/compose)
 [![SageMath](https://img.shields.io/badge/SageMath-10.7-3F7E44?logo=sagemath)](https://www.sagemath.org/)
-[![Ruff](https://img.shields.io/badge/Ruff-Linter-EEAA00?logo=python&logoColor=fff)](https://github.com/astral-sh/ruff)
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 
 <!-- # ![Project Banner](banner.jpg) -->
 
@@ -26,7 +26,7 @@ need to update ab graph theory graphs etc.
 
 - 🔧 Environment Configuration:
     
-    1. 🐳 Deploy Docker Compose Services
+    1. 🐳 Deploy Docker Compose Service
     ```bash
     docker compose up -d
     ```
