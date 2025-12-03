@@ -26,7 +26,11 @@ Graph features:
  used:
  https://www.youtube.com/watch?v=uxm0i5O4u_w
 
-
+- cubic graph
+  - all vertecies have degree three (3-regular graph)
+  - number of vertecies need to be even (from handshaking lemma)
+  \sum_{v \in V} deg(V) = 2 |E|
+  - number of edges is 3n/2 
 
 
 Subpath count details:
