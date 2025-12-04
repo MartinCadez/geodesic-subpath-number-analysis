@@ -163,9 +163,11 @@ class CubicGraphs:
 
     def _build_graphs(self):
         self._validate_args(self.num_nodes)
-        
-        nx_graphs = [graph.networkx_graph() for graph in graphs(self.num_nodes)
-                     if graph.is_regular(3) and graph.is_connected()]
+
+        nx_graphs = [g.networkx_graph() for g in graphs.nauty_geng(f"{self.num_nodes} -d3 -D3 -c")]
+
+        # nx_graphs = [graph.networkx_graph() for graph in graphs(self.num_nodes)
+        #              if graph.is_regular(3) and graph.is_connected()]
 
         if not nx_graphs:
             raise RuntimeError
@@ -227,8 +229,8 @@ if __name__ == "__main__":
     # print(G.incidence_matrix)
     # G.plot()
 
-    cg6 = CubicGraphs(4)
-    print("Number of graphs:", len(cg6.graphs))
-    cg6.plot(index=0, filename="test.png")
-    cg6.plot(index=1, filename="test1.png")
+    # cg6 = CubicGraphs(6)
+    # print("Number of graphs:", len(cg6.graphs))
+    # cg6.plot(index=0, filename="nauthy.png")
+    # cg6.plot(index=1, filename="nauthy1.png")
 
