@@ -1,6 +1,6 @@
 import networkx as nx
 
-def gpn(G: nx.Graph, count_trivial:bool=TRUE) -> int:
+def gpn(G: nx.Graph, count_trivial:bool=True) -> int:
     total_paths = G.number_of_nodes() if count_trivial else 0
     nodes = list(G.nodes())
 
