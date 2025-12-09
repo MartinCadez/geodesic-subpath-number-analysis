@@ -5,6 +5,8 @@ Graph features:
 - simple (aka no loops or multiple edges between nodes)
 - finite
 graph generate nauty: https://doc-gitlab.sagemath.org/html/en/reference/graphs/sage/graphs/graph_generators.html
+graphs sequence: https://oeis.org/A001187
+all graphs download: https://users.cecs.anu.edu.au/~bdm/data/graphs.html
 
 - bipartite graph
   - rule 1: have two disjoint and independent sets (parts) with vertices
