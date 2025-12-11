@@ -1,0 +1,323 @@
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{tikz}
+\usepackage{varwidth}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Definition Environment
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\definecolor{definition_background}{HTML}{fcf8f7}
+\definecolor{definition_accent}{HTML}{730a05}
+\definecolor{definition_title_mid_background}{HTML}{730a05}
+\definecolor{definition_title_left_background}{HTML}{b52922}
+\definecolor{definition_title_right_background}{HTML}{870c05}
+\definecolor{definition_title_text}{HTML}{faf5f5}
+
+\newtcolorbox{definition}[2][]
+{enhanced,
+	before skip=2mm,
+    after skip=2mm,
+    colback=definition_background,
+    colframe=definition_accent,boxrule=0.5mm,
+	attach boxed title to top left={xshift=1cm,yshift*=1mm-\tcboxedtitleheight},
+    varwidth boxed title*=-3cm,
+	boxed title style={
+        frame code={
+        \path[fill=definition_title_left_background]
+            ([yshift=-1mm,xshift=-1mm]frame.north west)
+            arc[start angle=0,end angle=180,radius=1mm]
+            ([yshift=-1mm,xshift=1mm]frame.north east)
+            arc[start angle=180,end angle=0,radius=1mm];
+        \path[
+            left color=definition_title_left_background!80!definition_accent,  
+            right color=definition_title_right_background!60!definition_accent, 
+            middle color=definition_title_mid_background!60!definition_accent
+        ]
+            ([xshift=-2mm]frame.north west) -- ([xshift=2mm]frame.north east)
+            [rounded corners=1mm] -- ([xshift=1mm,yshift=-1mm]frame.north east)
+            -- (frame.south east) -- (frame.south west)
+            -- ([xshift=-1mm,yshift=-1mm]frame.north west)
+            [sharp corners]-- cycle;
+				},
+        interior engine=empty,
+	},
+	fonttitle=\bfseries,
+	coltitle=definition_title_text,
+	title={#2},#1}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Theorem Environment
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\definecolor{theorem_background}{HTML}{fafbfc}
+\definecolor{theorem_accent}{HTML}{0a0569}
+% \definecolor{theorem_text}{HTML}{bcd9f7}
+\definecolor{theorem_title_box_background}{HTML}{dadfeb}
+
+\newtcolorbox{theorem}[2][]
+{%
+    enhanced,           
+    breakable,               
+    colback = theorem_background,  
+    frame hidden,               
+    boxrule = 0sp,              
+    borderline west = {2pt}{0pt}{theorem_accent},  
+    rounded corners,           
+    detach title,               
+    before upper = {%
+        \hspace*{-0.7em}%
+        \raisebox{-0.7ex}{\tcbox[
+            enhanced,
+            size=small,
+            boxrule=1pt,
+            arc=3pt,
+            colback=theorem_title_box_background,
+            coltext=black,
+            boxsep=3pt
+        ]{\bfseries\slshape\footnotesize Izrek}}%
+        \hspace{0.5em}%
+        {\color{theorem_accent}\textbf{#2}}%
+        \par\smallskip
+    },
+    coltitle = theorem_accent,
+    fonttitle = \bfseries,      
+    description font = \mdseries,    
+    separator sign none,        
+    segmentation style={solid, theorem_accent},
+    title = #2,
+    #1
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Claim Environment
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\definecolor{claim_background}{HTML}{fafcfa}
+\definecolor{claim_accent}{HTML}{064003}
+% \definecolor{claim_text}{HTML}{ccf7bc}
+\definecolor{claim_title_box_background}{HTML}{e0e6d8}
+
+\newtcolorbox{claim}[2][]
+{%
+    enhanced,                   
+    breakable,                  
+    colback = claim_background,  
+    frame hidden,               
+    boxrule = 0sp,              
+    borderline west = {2pt}{0pt}{claim_accent},
+    rounded corners,           
+    detach title,               
+    before upper = {%
+        \hspace*{-0.7em}%
+        \raisebox{-0.7ex}{\tcbox[
+            enhanced,
+            size=small,
+            boxrule=1pt,
+            arc=3pt,
+            colback=claim_title_box_background,
+            coltext=black,
+            boxsep=3pt
+        ]{\bfseries\slshape\footnotesize Trditev}}%
+        \hspace{0.5em}%
+        {\color{claim_accent}\textbf{#2}}%
+        \par\smallskip
+    },
+    coltitle = claim_accent,
+    fonttitle = \bfseries,      
+    description font = \mdseries,    
+    separator sign none,        
+    segmentation style={solid, claim_accent},
+    title = #2,
+    #1
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Corollary Environment
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\definecolor{corollary_background}{HTML}{fbfafc}
+\definecolor{corollary_accent}{HTML}{510585}
+% \definecolor{corollary_text}{HTML}{f7decb}
+\definecolor{corollary_title_box_background}{HTML}{e3d9f0}
+
+\newtcolorbox{corollary}[2][]
+{%
+    enhanced,                   
+    breakable,                  
+    colback = corollary_background,  
+    frame hidden,               
+    boxrule = 0sp,              
+    borderline west = {2pt}{0pt}{corollary_accent},
+    rounded corners,           
+    detach title,               
+    before upper = {%
+        \hspace*{-0.7em}%
+        \raisebox{-0.7ex}{\tcbox[
+            enhanced,
+            size=small,
+            boxrule=1pt,
+            arc=3pt,
+            colback=corollary_title_box_background,
+            coltext=black,
+            boxsep=3pt
+        ]{\bfseries\slshape\footnotesize Posledica}}%
+        \hspace{0.5em}%
+        {\color{corollary_accent}\textbf{#2}}%
+        \par\smallskip
+    },
+    coltitle = corollary_accent,
+    fonttitle = \bfseries,      
+    description font = \mdseries,    
+    separator sign none,        
+    segmentation style={solid, corollary_accent},
+    title = #2,
+    #1
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Lemma Environment
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\definecolor{lemma_background}{HTML}{fcfbfa}
+\definecolor{lemma_accent}{HTML}{964d03}
+% \definecolor{lemma_text}{HTML}{f7decb}
+\definecolor{lemma_title_box_background}{HTML}{f0e3d1}
+
+\newtcolorbox{lemma}[2][]
+{%
+    enhanced,                   
+    breakable,                  
+    colback = lemma_background,  
+    frame hidden,               
+    boxrule = 0sp,              
+    borderline west = {2pt}{0pt}{lemma_accent},
+    rounded corners,           
+    detach title,               
+    before upper = {%
+        \hspace*{-0.7em}%
+        \raisebox{-0.7ex}{\tcbox[
+            enhanced,
+            size=small,
+            boxrule=1pt,
+            arc=3pt,
+            colback=lemma_title_box_background,
+            coltext=black,
+            boxsep=3pt
+        ]{\bfseries\slshape\footnotesize Lema}}%
+        \hspace{0.5em}%
+        {\color{lemma_accent}\textbf{#2}}%
+        \par\smallskip
+    },
+    coltitle = lemma_accent,
+    fonttitle = \bfseries,
+    description font = \mdseries,
+    separator sign none,
+    segmentation style={solid, lemma_accent},
+    title = #2,
+    #1
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Question Environment
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\definecolor{question_accent}{HTML}{2769ba}
+\definecolor{question_background}{HTML}{f2f8fc}
+
+\makeatletter
+\newtcolorbox{question}[2][]{%
+    enhanced,
+    breakable,
+    colback=question_background,
+    colframe=question_accent,
+    attach boxed title to top left={yshift*=-\tcboxedtitleheight},
+    fonttitle=\bfseries,
+    title={#2},
+    boxed title size=title,
+    boxed title style={%
+            sharp corners,
+            rounded corners=northwest,
+            colback=tcbcolframe,
+            boxrule=0pt,
+        },
+    underlay boxed title={%
+            \path[fill=tcbcolframe] (title.south west)--(title.south east)
+            to[out=0, in=180] ([xshift=5mm]title.east)--
+            (title.center-|frame.east)
+            [rounded corners=2mm] |-
+            (frame.north) -| cycle;
+        },
+    #1
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Note Environment
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usetikzlibrary{arrows,calc,shadows.blur}
+\tcbuselibrary{skins}
+\newtcolorbox{note}[2][]{%
+    enhanced jigsaw,
+    colback=gray!20!white,%
+    colframe=gray!80!black,
+    size=small,
+    boxrule=1pt,
+    title=\textbf{#2},
+    halign title=flush center,
+    coltitle=black,
+    breakable,
+    drop shadow=black!50!white,
+    attach boxed title to top left={xshift=1cm,yshift=-\tcboxedtitleheight/2,yshifttext=-\tcboxedtitleheight/2},
+    boxed title style={%
+            colback=white,
+            size=fbox,
+            boxrule=1pt,
+            boxsep=2pt,
+            underlay={%
+                    \coordinate (dotA) at ($(interior.west) + (-0.5pt,0)$);
+                    \coordinate (dotB) at ($(interior.east) + (0.5pt,0)$);
+                    \begin{scope}
+                        \clip (interior.north west) rectangle ([xshift=3ex]interior.east);
+                        \filldraw [
+                            white,
+                            blur shadow={shadow opacity=60, shadow yshift=-.75ex}, 
+                            rounded corners=2pt
+                        ] (interior.north west) rectangle (interior.south east);
+                    \end{scope}
+                    \begin{scope}[gray!80!black]
+                        \fill (dotA) circle (0.5pt);
+                        \fill (dotB) circle (0.5pt);
+                    \end{scope}
+                },
+        },
+    #1,
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Example Environment
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\definecolor{example_background}{HTML}{f8f9fa}
+\definecolor{example_accent}{HTML}{495057}
+\definecolor{example_title}{HTML}{212529}
+
+\newtcolorbox{example}[2][]{%
+    enhanced,
+    colback = example_background,
+    breakable,
+    colframe = example_accent,
+    coltitle = example_title,
+    boxrule = 1pt,
+    arc=2pt,
+    detach title,
+    before upper=\textbf{#2}\par\smallskip,
+    fonttitle = \bfseries,
+    description font = \mdseries,
+    separator sign none,
+    description delimiters parenthesis,
+    title = {#2},
+    #1
+}
+
