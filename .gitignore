@@ -91,3 +91,19 @@ dmypy.json
 cython_debug/
 
 .ruff_cache
+
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.bbl
+*.blg
+*.nav
+*.snm
+*.pdf
+
