@@ -50,3 +50,59 @@ Subpath count details:
 use:
 docker compose up -d 
 docker run 
+
+adding some graph groups:
+- trees
+- line graphs
+- complete graphs 
+- complete bipartite graphs
+- star graphs
+- cycle graphs
+- planar graphs
+(maybe) cactus graphs
+(maybe) circle graphs
+
+
+add this to report later:
+% \newpage
+% \section{SIMULATED ANNEALING}
+% let $\mathcal{G} = \{ \text{all connected labeled simple graphs \} $ 
+% want: $arg max_{G \in \mathcal{G}} gpn(G)$ \\
+% search space: $ \mathcal{X} = \{ G(V, E) \in \mathcal{G} \mid |V| = n \}$ 
+
+% Energy function: $-gpn(G)$ (objective function), function to optimise/minimize
+%
+% Initial candidate solution: 
+% hevristic!
+% Path graph on n vertecies ($P_n$) coldest start, good for SA since 
+% its only up from here.
+%
+% Initial temperature value:
+% random! (fine-tunning for this value will letter be establish)
+%
+% Initial energy value: (Metropolis criterion)
+% $ \mathcal{P}(\text{accept}) = \exp{\frac{\Delta E}{k \cdot T}}$
+%
+% $
+% X: \Omega \to {0, 1}
+% $
+%
+% $ 
+% X_i(\omega) =
+% \begin{cases}
+%   1 ;& \text{$G_{\text{nov}} $ je sprejet v iteraciji $i$ pri izidu $\omega$ } \\
+%   0 ;& \text{sicer}
+% \end{cases}
+% $
+%
+% $$
+% \mathbb{P}(X_i = 1 \mid \Delta E, T) = 
+% \begin{cases}
+%   1 ;& \Delta E_i \leq 0 \\
+%   \exp{(\frac{\Delta E_i}{k \cdot T_i})} ;& \Delta E > 0 
+% \end{cases}
+% $$
+%
+%
+% Compute energy of Initial temperature value:
+\end{document}
