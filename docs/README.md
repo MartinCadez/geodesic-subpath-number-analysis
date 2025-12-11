@@ -4,19 +4,38 @@
 [![SageMath](https://img.shields.io/badge/SageMath-10.7-3F7E44?logo=sagemath)](https://www.sagemath.org/)
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 
-<!-- # ![Project Banner](banner.jpg) -->
-
+# ![Project Banner](banner.jpg)
 <div align="center">
-<h2>need to update</h2>
+<h2>🕸️ Geodesic Subpath Number Analysis 🕸️</h2>
 </div>
 
 _Project was developed as part of course 'Financial lab' at the 
 University of Ljubljana, Faculty of Mathematics and Physics, during the 
-academic year 2025/2026. It aims to (need to update)_
+academic year 2025/2026. The aim was to analyze structural properties in 
+various classes of connected simple graphs through the lens of the
+geodesic subpath number._
 
 
 ## 📚 Essentials
-need to update ab graph theory graphs etc.
+Let $`G = (V, E)`$ be connected, simple, undirected graph. 
+For any two vertices (nodes) $`u, v \in V`$ the length of **shortest** path 
+between them is called **graph distance**, denoted as $`d_G(u, v)`$.
+
+- **`Path`** in $G$ is a sequence of distinct vertices $`(v_i)_{i=1}^{\ell}`$ 
+such that each consecutive pair $`(v_{i-1}, v_i) \in E`$
+- **`Trivial path`** is a path of length $`0`$ consisting of a single vertex
+- **`Geodesic path`** between vertices $u$ and $v$ is any simple path of length 
+exactly $d_G(u, v)$
+
+Let $P \mspace{2mu} (G \mspace{2mu})$ denote the set of all geodesic paths (including trivial paths).  
+The **`geodesic subpath number`** of $G$ is defined as:
+
+$$
+gpn \mspace{2mu}( G \mspace{3mu}) \mspace{2mu} = | P \mspace{5mu} ( G \mspace{3mu}) \mspace{6mu}|
+$$
+
+Simply, $`gpn(G \mspace{2mu} )`$ counts all shortest paths between
+vertex pairs and includes all trivial paths.
 
 ## 🛠️ Setup Guide
 
