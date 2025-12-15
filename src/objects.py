@@ -108,6 +108,7 @@ class BipartiteGraphs:
         )
         
         plt.axis("off")
+
         if filename:
             plt.savefig(filename, bbox_inches="tight", facecolor="white")
             plt.close()
@@ -170,11 +171,10 @@ class CubicGraphs:
 
     def _plot_single(self, graph: nx.Graph, index: int, filename: str | None = None):
         plt.figure(figsize=(10, 8))
-        pos = nx.circular_layout(graph)
         
         nx.draw_networkx(
             graph,
-            pos=pos,
+            pos=nx.circular_layout(graph),
             labels={n: f"$v_{{{n+1}}}$" for n in graph.nodes()},
             node_color="#698ad1",
             edgecolors="#292a40",
@@ -184,7 +184,9 @@ class CubicGraphs:
             font_color="white",
             font_size=30
         )
+
         plt.axis("off")
+
         if filename:
             plt.savefig(filename, bbox_inches="tight", facecolor="white")
             plt.close()
@@ -252,11 +254,10 @@ class TriangleFreeGraphs:
 
     def _plot_single(self, graph: nx.Graph, index: int, filename: str | None = None):
         plt.figure(figsize=(10, 8))
-        pos = nx.circular_layout(graph)
         
         nx.draw_networkx(
             graph,
-            pos=pos,
+            pos=nx.circular_layout(graph),
             labels={n: f"$v_{{{n+1}}}$" for n in graph.nodes()},
             node_color="#698ad1",
             edgecolors="#292a40",
@@ -266,7 +267,9 @@ class TriangleFreeGraphs:
             font_color="white",
             font_size=30
         )
+
         plt.axis("off")
+
         if filename:
             plt.savefig(filename, bbox_inches="tight", facecolor="white")
             plt.close()
