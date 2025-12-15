@@ -6,9 +6,7 @@ import matplotlib.pyplot as plt
 
 
 class BipartiteGraphs:
-    U_NODE_COLOR = "#698ad1"
-    V_NODE_COLOR = "#b5dcff"
-
+    
     def __init__(
         self,
         num_nodes: int
@@ -110,7 +108,6 @@ class BipartiteGraphs:
         )
 
 class CubicGraphs:
-    NODE_COLOR = "#698ad1"
 
     def __init__(self, num_nodes: int):
         self.num_nodes = num_nodes
@@ -172,7 +169,7 @@ class CubicGraphs:
             graph,
             pos=pos,
             labels={n: f"$v_{{{n+1}}}$" for n in graph.nodes()},
-            node_color=self.NODE_COLOR,
+            node_color="#698ad1",
             edgecolors="#292a40",
             linewidths=2,
             node_size=3000,
@@ -190,7 +187,6 @@ class CubicGraphs:
 
 
 class TriangleFreeGraphs:
-    NODE_COLOR = "#f08c4f"
 
     def __init__(self, num_nodes: int):
         self.num_nodes = num_nodes
@@ -256,7 +252,7 @@ class TriangleFreeGraphs:
             graph,
             pos=pos,
             labels={n: f"$v_{{{n+1}}}$" for n in graph.nodes()},
-            node_color=self.NODE_COLOR,
+            node_color="#698ad1",
             edgecolors="#292a40",
             linewidths=2,
             node_size=3000,
@@ -271,94 +267,3 @@ class TriangleFreeGraphs:
             plt.close()
         else:
             plt.show()
-
-
-# class LineGraph:
-#     NODE_COLOR = "#e08e45"
-
-#     def __init__(
-#             self,
-#             num_nodes: int
-#     ):
-#         self.num_nodes = num_nodes
-#         self.label = f"L({self.num_nodes})"
-#         self.graph = self._build_graphs()
-
-#     def __repr__(self) -> str:
-#         return f"LineGraph(num_nodes={self.graph.number_of_nodes()}, num_edges={self.graph.number_of_edges()})"
-
-#     @staticmethod
-#     def _validate_args(num_nodes: int) -> None:
-#         if not isinstance(num_nodes, int):
-#             raise ValueError("num_nodes must be an integer.")
-#         if num_nodes < 1:
-#             raise ValueError("Line graph must have at least 1 node.")
-
-#     def _build_graphs(self):
-#         self._validate_args(self.num_nodes)
-#         G = nx.Graph()
-#         G.add_edges_from((i, i + 1) for i in range(self.num_nodes - 1))
-#         return G
-
-#     @property
-#     def nodes(self) -> list[str]:
-#         return list(self.graph.nodes())
-
-#     @property
-#     def edges(self) -> list[tuple[str, str]]:
-#         return list(self.graph.edges())
-
-#     @property
-#     def degree_sequence(self) -> tuple[int, ...]:
-#         return tuple(dict(self.graph.degree()).values())
-
-#     @property
-#     def adj_matrix(self) -> np.ndarray:
-#         return nx.to_numpy_array(self.graph, nodelist=list(self.graph.nodes()))
-
-#     @property
-#     def incidence_matrix(self) -> np.ndarray:
-#         return nx.incidence_matrix(self.graph, oriented=False).toarray()
-
-#     def plot(self, filename: str | None = None) -> None:
-#         plt.figure(figsize=(8, 2))  # horizontal layout
-
-#         nx.draw_networkx(
-#             self.graph,
-#             pos={i: (i, 0) for i in self.graph.nodes()},
-#             labels={n: f"$v_{n}$" for n in self.graph.nodes()},
-#             node_color=self.NODE_COLOR,
-#             edgecolors="#292a40",
-#             linewidths=2,
-#             node_size=1000,
-#             width=2,
-#             font_color="white",
-#             font_size=16
-#         )
-
-#         plt.axis("off")
-#         plt.title(self.label)
-
-#         if filename:
-#             plt.savefig(filename, bbox_inches="tight", facecolor="white")
-#             plt.close()
-#         else:
-#             plt.show()
-
-
-if __name__ == "__main__":
-    # G = BipartiteGraph(num_u=3, num_v=2, num_edges=4)
-    # print(G)
-    # print(G.u_nodes)
-    # print(G.v_nodes)
-    # print(G.edges)
-    # print(G.degree_sequence)
-    # print(G.adj_matrix)
-    # print(G.incidence_matrix)
-    # G.plot()
-
-    # cg6 = CubicGraphs(6)
-    # print("Number of graphs:", len(cg6.graphs))
-    # cg6.plot(index=0, filename="nauthy.png")
-    # cg6.plot(index=1, filename="nauthy1.png")
-
