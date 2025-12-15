@@ -101,7 +101,7 @@ class BipartiteGraphs:
             node_color = "#698ad1",
             edgecolors="#292a40",
             linewidths=2,
-            node_size=4000,
+            node_size=3000,
             width=2,
             font_color="white",
             font_size=30
