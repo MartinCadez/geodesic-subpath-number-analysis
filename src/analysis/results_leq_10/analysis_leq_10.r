@@ -277,3 +277,23 @@ ggsave("gpn_vs_vozlisca_4kategorije.jpg", p_nodes_simple,
        width = 13, height = 8, dpi = 300, bg = "white")
 ggsave("gpn_vs_povezave_4kategorije.jpg", p_edges_simple, 
        width = 13, height = 8, dpi = 300, bg = "white")
+
+
+##TABELA Z OPT GRAFI
+df2_tabela <- read_csv("gpn_class_data.csv") %>%
+  group_by(num_nodes) %>%
+  filter(gpn_num == max(gpn_num)) %>%
+  ungroup() %>%
+  select(st_vozlisc = num_nodes, unikatno_ime = name, st_povezav = num_edges, st_gpn = gpn_num)
+
+rezultat <- df2_tabela %>%
+  group_by(st_vozlisc) %>%
+  slice(1) %>%
+  ungroup()
+
+# Razvrstimo po številu vozlišč
+rezultat <- rezultat %>%
+  arrange(st_vozlisc)
+
+# Prikaz rezultata
+print(rezultat)
