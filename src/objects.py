@@ -106,6 +106,13 @@ class BipartiteGraphs:
             font_color="white",
             font_size=30
         )
+        
+        plt.axis("off")
+        if filename:
+            plt.savefig(filename, bbox_inches="tight", facecolor="white")
+            plt.close()
+        else:
+            plt.show()
 
 class CubicGraphs:
 
@@ -178,7 +185,6 @@ class CubicGraphs:
             font_size=30
         )
         plt.axis("off")
-        plt.title(f"{self.label} - Graph {index+1}")
         if filename:
             plt.savefig(filename, bbox_inches="tight", facecolor="white")
             plt.close()
@@ -261,7 +267,6 @@ class TriangleFreeGraphs:
             font_size=30
         )
         plt.axis("off")
-        plt.title(f"{self.label} - Graph {index+1}")
         if filename:
             plt.savefig(filename, bbox_inches="tight", facecolor="white")
             plt.close()
