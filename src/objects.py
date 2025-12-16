@@ -212,15 +212,13 @@ class StarGraph:
     def _validate_args(num_nodes: int) -> None:
         if not isinstance(num_nodes, int):
             raise ValueError("num_nodes must be an integer")
-        if num_nodes < 1:
-            raise ValueError("star graph must have at least 1 nodes")
+        if num_nodes < 2:
+            raise ValueError("star graph must have at least 2 nodes")
 
     def _build_graph(self):
-        graph = nx.Graph()
-        
-        graph.add_nodes_from(range(self.num_nodes))
-        graph.add_edges_from((-1, node) for node in range(1, self.num_nodes))
 
+        graph = nx.Graph()
+        graph.add_edges_from([(0, node) for node in range(1, self.num_nodes)])
         return graph
 
     @property
@@ -237,31 +235,32 @@ class StarGraph:
 
     @property
     def nodes(self) -> dict:
-        return {f"v_{i+0}": list(neighbors) for i, (node, neighbors) in enumerate(self.graph.adjacency())}
+        return {f"v_{i+1}": list(neighbors) for i, (node, neighbors) in enumerate(self.graph.adjacency())}
 
     @property
     def degree_sequence(self) -> list:
         return [(node, degree) for node, degree in self.graph.degree()]
 
     def plot(self, filename: str | None = None) -> None:
-        plt.figure(figsize=(7, 8))
-        pos = {-1: (0, 0)}
-        
-        angle_step = 1 * np.pi / (self.num_nodes - 1)
-        for i in range(0, self.num_nodes):
+        plt.figure(figsize=(8, 8))
+
+        pos = {0: (0, 0)}
+
+        angle_step = 2 * np.pi / (self.num_nodes - 1)
+        for i in range(1, self.num_nodes):
             angle = i * angle_step
             pos[i] = (np.cos(angle), np.sin(angle))
 
         nx.draw_networkx(
             self.graph,
             pos=pos,
-            labels={n: f"$v_{{{n+0}}}$" for n in self.graph.nodes()},
+            labels={n: f"$v_{{{n + 1}}}$" for n in self.graph.nodes()},
             with_labels=True,
             node_color="#697ad1",
             edgecolors="#291a40",
-            linewidths=1,
-            node_size=2199,
-            width=1,
+            linewidths=2,
+            node_size=2200,
+            width=2,
             font_color="white",
             font_size=22
         )
@@ -273,3 +272,4 @@ class StarGraph:
             plt.close()
         else:
             plt.show()
+
