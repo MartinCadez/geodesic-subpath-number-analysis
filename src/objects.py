@@ -1,7 +1,6 @@
 from sage.all import *
 import numpy as np
 import networkx as nx
-from networkx.algorithms import bipartite
 import matplotlib.pyplot as plt
 
 
