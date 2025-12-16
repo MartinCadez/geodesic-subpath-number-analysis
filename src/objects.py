@@ -22,9 +22,9 @@ class BipartiteGraphs:
     @staticmethod
     def _validate_args(num_nodes: int) -> None:
         if not isinstance(num_nodes, int):
-            raise ValueError("num_nodes must be an integer.")
+            raise ValueError("num_nodes must be an integer")
         if num_nodes < 1:
-            raise ValueError("BipartiteGraph graph must have at least 1 node.")
+            raise ValueError("bipartiteGraph graph must have at least 1 node")
 
     def _build_graphs(self):
         self._validate_args(self.num_nodes)
@@ -32,7 +32,7 @@ class BipartiteGraphs:
         nx_graphs = [g.networkx_graph() for g in graphs.nauty_geng(f"{self.num_nodes} -b -c")]
 
         if not nx_graphs:
-            raise RuntimeError(f"No bipartite graphs generated for n={self.num_nodes}")
+            raise RuntimeError(f"no bipartite graphs generated for n={self.num_nodes}")
 
         return nx_graphs
 
@@ -130,11 +130,11 @@ class CubicGraphs:
     @staticmethod
     def _validate_args(num_nodes: int) -> None:
         if not isinstance(num_nodes, int):
-            raise ValueError("num_nodes must be an integer.")
+            raise ValueError("num_nodes must be an integer")
         if num_nodes < 4:
-            raise ValueError("Cubic graph must have at least 4 nodes.")
+            raise ValueError("cubic graph must have at least 4 nodes")
         if num_nodes % 2 != 0:
-            raise ValueError("Cubic (3-regular) graph must have an even number of nodes.")
+            raise ValueError("cubic (3-regular) graph must have an even number of nodes")
 
     def _build_graphs(self):
         self._validate_args(self.num_nodes)
@@ -192,85 +192,84 @@ class CubicGraphs:
         else:
             plt.show()
 
+class StarGraph:
 
-class TriangleFreeGraphs:
-
-    def __init__(self, num_nodes: int):
+    def __init__(
+            self,
+            num_nodes: int
+        ):
         self.num_nodes = num_nodes
-        self.label = f"TriangleFreeGraphs({num_nodes})"
-        self.graphs = self._build_graphs()
-    
+        self._validate_args(num_nodes)
+        self.graph = self._build_graph()
+
     def __repr__(self) -> str:
-        return f"TriangleFreeGraphs(num_nodes={self.num_nodes}, num_graphs={len(self.graphs)})"
+        return f"StarGraph(num_nodes={self.num_nodes})"
 
     def __str__(self) -> str:
-        return self.__repr__()
+        return f"{self.__repr__()}"
 
     @staticmethod
     def _validate_args(num_nodes: int) -> None:
         if not isinstance(num_nodes, int):
-            raise ValueError("num_nodes must be an integer.")
+            raise ValueError("num_nodes must be an integer")
         if num_nodes < 1:
-            raise ValueError("Triangle-free graph must have at least 1 node.")
+            raise ValueError("star graph must have at least 1 nodes")
 
-    def _build_graphs(self):
-        self._validate_args(self.num_nodes)
-
-        nx_graphs = [g.networkx_graph() for g in graphs.nauty_geng(f"{self.num_nodes} -t -c")]
-
-        if not nx_graphs:
-            raise RuntimeError(f"No triangle-free graphs generated for n={self.num_nodes}")
-
-        return nx_graphs
-
-    @property
-    def degree_sequences(self) -> list[tuple[int, ...]]:
-        sequences = []
-        for graph in self.graphs:
-            deg_seq = tuple(d for n, d in sorted(graph.degree(), key=lambda x: x[0]))
-            sequences.append(deg_seq)
-        return sequences
-
-
-    @property
-    def edges(self) -> list[list[tuple[int, int]]]:
-        return [list(graph.edges()) for graph in self.graphs]
-
-    @property
-    def adj_matrices(self) -> list[np.ndarray]:
-        return [nx.to_numpy_array(graph, nodelist=sorted(graph.nodes())) for graph in self.graphs]
-
-    @property
-    def incidence_matrices(self) -> list[np.ndarray]:
-        return [nx.incidence_matrix(graph, oriented=False).toarray() for graph in self.graphs]
-
-    def plot(self, index: int | None = None, filename: str | None = None) -> None:
-        if index is not None:
-            self._plot_single(self.graphs[index], index, filename)
-        else:
-            for i, graph in enumerate(self.graphs):
-                self._plot_single(graph, i)
-
-    def _plot_single(self, graph: nx.Graph, index: int, filename: str | None = None):
-        plt.figure(figsize=(10, 8))
+    def _build_graph(self):
+        graph = nx.Graph()
         
+        graph.add_nodes_from(range(self.num_nodes))
+        graph.add_edges_from((-1, node) for node in range(1, self.num_nodes))
+
+        return graph
+
+    @property
+    def edges(self) -> list:
+        return list(self.graph.edges())
+
+    @property
+    def adj_matrix(self) -> np.ndarray:
+        return nx.to_numpy_array(self.graph, nodelist=sorted(self.graph.nodes()))
+
+    @property
+    def incidence_matrix(self) -> np.ndarray:
+        return nx.incidence_matrix(self.graph, oriented=False).toarray()
+
+    @property
+    def nodes(self) -> dict:
+        return {f"v_{i+0}": list(neighbors) for i, (node, neighbors) in enumerate(self.graph.adjacency())}
+
+    @property
+    def degree_sequence(self) -> list:
+        return [(node, degree) for node, degree in self.graph.degree()]
+
+    def plot(self, filename: str | None = None) -> None:
+        plt.figure(figsize=(7, 8))
+        pos = {-1: (0, 0)}
+        
+        angle_step = 1 * np.pi / (self.num_nodes - 1)
+        for i in range(0, self.num_nodes):
+            angle = i * angle_step
+            pos[i] = (np.cos(angle), np.sin(angle))
+
         nx.draw_networkx(
-            graph,
-            pos=nx.circular_layout(graph),
-            labels={n: f"$v_{{{n+1}}}$" for n in graph.nodes()},
-            node_color="#698ad1",
-            edgecolors="#292a40",
-            linewidths=2,
-            node_size=3000,
-            width=2,
+            self.graph,
+            pos=pos,
+            labels={n: f"$v_{{{n+0}}}$" for n in self.graph.nodes()},
+            with_labels=True,
+            node_color="#697ad1",
+            edgecolors="#291a40",
+            linewidths=1,
+            node_size=2199,
+            width=1,
             font_color="white",
-            font_size=30
+            font_size=22
         )
-
+        
         plt.axis("off")
-
+        
         if filename:
-            plt.savefig(filename, bbox_inches="tight", facecolor="white")
+            plt.savefig(filename, bbox_inches="tight")
             plt.close()
         else:
             plt.show()
