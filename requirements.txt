@@ -8,3 +8,4 @@ fastparquet
 polars
 jupyterlab
 ipykernel
+simanneal
