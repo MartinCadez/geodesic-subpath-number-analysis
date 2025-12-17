@@ -38,7 +38,7 @@ Simply, $`gpn(G \mspace{2mu} )`$ counts all shortest paths between
 vertex pairs and includes all trivial paths.
 
 ## 📝 Findings
-Report of our analysis in Slovene can be accessed here: [full report](docs/report/geodetske_poti.pdf).
+Report of our analysis in Slovene can be accessed here: [full report](docs/report/geodetske_poti.pdf)
 
 ## 🛠️ Setup Guide
 
@@ -71,12 +71,22 @@ the host are immediately reflected inside the container, and vice versa.
 > docker ps --filter "name=sagemath-dev"
 > ``````
 
-- 🚀 Run Simulation Within Container 
+
+> [!TIP]
+> Jupyter notebook cells can be executed directly from an IDE such as **Visual Studio Code**:
+>
+> - Install the **Jupyter Notebook** extension
+> - Select **`Dev Containers: Attach to Running Container`** from option menu
+> - Choose **`/sagemath-dev`** container as the execution environment
+
+- 🚀 Running Python Modules from Docker Container:
     ```bash
-    sage -python src/main.py
+    sage -python <path-to-file>
     ```
+
 
 ## 💡 Advisors
 Project was developed under the guidance of:
 - Riste Škrekovski 
 - Timotej Hrga
+
