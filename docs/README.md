@@ -37,6 +37,9 @@ $$
 Simply, $`gpn(G \mspace{2mu} )`$ counts all shortest paths between
 vertex pairs and includes all trivial paths.
 
+## 📝 Findings
+Report of our analysis in Slovene can be accessed here: [full report](docs/report/geodetske_poti.pdf).
+
 ## 🛠️ Setup Guide
 
 - 📋Pre-requisites:
