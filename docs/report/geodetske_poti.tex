@@ -70,12 +70,12 @@
 \section{Uvod}
 \label{sec:uvod}
 
-Namen te raziskave je sistematično preučiti ekstremalne grafe glede na število geodetskih podpoti (angl. \emph{geodesic path number}, okrajšano $gpn$) v različnih strukturnih razredih povezanih grafov. Specifično nas zanima identifikacija grafov, ki v danem razredu dosežejo maksimalno možno vrednost $gpn(G)$ za fiksno število vozlišč $n$. 
+Namen te raziskave je bil sistematično preučiti ekstremalne grafe glede na število geodetskih podpoti (angl. \emph{geodesic path number}, okrajšano $gpn$) v različnih strukturnih razredih povezanih grafov. Specifično nas je zanimala identifikacija grafov, ki v danem razredu dosežejo maksimalno možno vrednost $gpn$ za fiksno število vozlišč $n$. 
 
-Osrednje raziskovalno vprašanje je kateri grafi maksimizirajo število geodetskih podpoti med vsemi povezanimi grafi na $n$ vozliščih?
+Osrednje raziskovalno vprašanje je bilo, kateri grafi maksimizirajo število geodetskih podpoti med vsemi povezanimi grafi na $n$ vozliščih.
 
-Reševanja problema se lotimo v treh glavnih korakih.
-V prvem koraku izvedemo izčrpno analizo grafov vseh navedenih razredov za majhna $(\leq 10)$ števila vozlišč n. To nam omogoči vpogled v obnašanje različnih tipov grafov. V drugem koraku na podlagi prejšnje analize postavimo hipotezo o tem, kateri grafi so optimalni za poljubno število vozlišč n. V zadnjem koraku postavljeno hipotezo preverimo z uporabo  stohastičnih metod, kot je simulirano žarjenje, za večja števila vozlišč.
+Reševanja problema smo se lotili v treh glavnih korakih.
+V prvem koraku smo izvedli izčrpno analizo grafov vseh navedenih razredov za majhna $(\leq 10)$ števila vozlišč n. To nam je omogočilo vpogled v obnašanje različnih tipov grafov. V drugem koraku smo na podlagi prejšnje analize postavili hipotezo o tem, kateri grafi so optimalni za poljubno število vozlišč $n$. V zadnjem koraku smo postavljeno hipotezo preverili z uporabo stohastičnih metod, za večja števila vozlišč.
 
 \section{Definicije in teoretično ozadje}
 Za natančno obravnavo problema najprej ponovimo ključne definicije.
@@ -93,7 +93,7 @@ $$
 Za vsak par različnih vozlišč je vsaj ena geodetska pot, za vsako vozlišče pa štejemo tudi trivialno pot.
 
 
-V raziskavi se osredotočamo na naslednje strukturne razrede povezanih grafov:
+V raziskavi smo se osredotočali na naslednje strukturne razrede povezanih grafov:
 
 
 \textbf{Definicija 4 (Dvodelni graf).} Graf $G = (V, E)$ je \emph{dvodelen}, če obstaja particija množice vozlišč $V = A \cup B$, $A \cap B = \emptyset$, tako da za vsako povezavo $uv \in E$ velja $(u \in A \land v \in B) \lor (u \in B \land v \in A)$. Vse povezave torej povezujejo vozlišča iz različnih partit.
@@ -105,14 +105,14 @@ V raziskavi se osredotočamo na naslednje strukturne razrede povezanih grafov:
 \textbf{Definicija 6 (Kubični graf).} Graf $G$ je \emph{kubičen} (oz. 3-regularen), če ima vsako vozlišče stopnjo $3$. Za kubične grafe na $n$ vozliščih mora biti $n$ sod in število povezav je $3n/2$.
 
 
-\textbf{Definicija 7 (Ekstremalni graf).} Graf $G$ je \emph{ekstremalen} glede na invarianto $P$ v razredu grafov $\mathcal{C}$, če med vsemi grafi iz $\mathcal{C}$ doseže največjo (ali najmanjšo) možno vrednost $P(G)$. V naši študiji iščemo grafe, ki maksimizirajo invarianto $gpn(G)$ znotraj posameznega razreda.
+\textbf{Definicija 7 (Ekstremalni graf).} Graf $G$ je \emph{ekstremalen} glede na invarianto $P$ v razredu grafov $\mathcal{C}$, če med vsemi grafi iz $\mathcal{C}$ doseže največjo (ali najmanjšo) možno vrednost $P(G)$. V naši študiji smo iskali grafe, ki maksimizirajo invarianto $gpn(G)$ znotraj posameznega razreda.
 
 \section{Reševanje problema na majhnih grafih}
 
-V prvem delu definiramo module za generiranje grafov treh zahtevanih tipov- dvodelnih, kubičnih in brez trikotnikov. Koda uporabi knjižnice SageMath, NetworkX in Matplotlib za generiranje, analizo in vizualizacijo grafov.
+V prvem delu smo definirali module za generiranje grafov treh zahtevanih tipov- dvodelnih, kubičnih in brez trikotnikov. Koda je uporabila knjižnice SageMath, NetworkX in Matplotlib za generiranje, analizo in vizualizacijo grafov.
 
 \subsection{Generiranje grafov}
-Del (284 934) analiziranih grafov je bil pridobljen z uporabo spodaj opisanih modulov za generiranje grafov. Preostanek (11 721 442) je bil pridobljen iz baze podatkov\footnote{\url{https://hog.grinvin.org/https://users.cecs.anu.edu.au/~bdm/data/graphs.html}}.
+Del (284 934) analiziranih grafov je bil pridobljen z uporabo spodaj opisanih modulov za generiranje grafov. Preostanek (11 721 442) je bil pridobljen iz spletne baze podatkov\footnote{\url{https://hog.grinvin.org/https://users.cecs.anu.edu.au/~bdm/data/graphs.html}}.
 
 \textbf{Dvodelni grafi}
 
@@ -128,7 +128,7 @@ Razred \texttt{TriangleFreeGraphs} generira vse povezane grafe brez trikotnikov 
 
 \subsection{Izračun števila geodetskih podpoti}
 
-Implementiramo funkcijo \texttt{gpn}, ki izračuna število vseh najkrajših poti med vsemi pari vozlišč v grafu. Če je parameter \texttt{count\_trivial} nastavljen na \texttt{True}, v štetje vključi tudi trivialne poti (poti dolžine 0 od vozlišča do samega sebe), sicer jih izloči. Algoritem deluje tako, da najprej inicializira števec na število vozlišč (za trivialne poti, če so vključene). Nato za vsak par različnih vozlišč $(u, v)$ v grafu pobere vse najkrajše poti med njima z uporabo funkcije 
+Implementirali smo funkcijo \texttt{gpn}, ki izračuna število vseh najkrajših poti med vsemi pari vozlišč v grafu. Če je parameter \texttt{count\_trivial} nastavljen na \texttt{True}, v štetje vključi tudi trivialne poti (poti dolžine 0 od vozlišča do samega sebe), sicer jih izloči. Algoritem deluje tako, da najprej inicializira števec na število vozlišč (za trivialne poti, če so vključene). Nato za vsak par različnih vozlišč $(u, v)$ v grafu pobere vse najkrajše poti med njima z uporabo funkcije 
 \texttt{nx.all\_shortest\_paths} in prišteje njihovo število k skupnemu rezultatu. Funkcija uporablja optimizacijo, da za vsak par vozlišč šteje poti samo v eno smer, saj je množica najkrajših poti od $u$ do $v$ enaka množici najkrajših poti od $v$ do $u$.
 
 \begin{algorithm}
@@ -158,14 +158,14 @@ Implementiramo funkcijo \texttt{gpn}, ki izračuna število vseh najkrajših pot
 \end{algorithmic}
 \end{algorithm}
 
-Računanja $gpn$ se lahko lotimo tudi z uporabo celoštevilskega linearnega programa (z nelinearnimi omejitvami). 
+Računanja $gpn$ smo se lahko lotili tudi z uporabo celoštevilskega linearnega programa (z nelinearnimi omejitvami). 
 
 \begin{mdframed}[linecolor=black, linewidth=2pt, roundcorner=10pt, innertopmargin=10pt, innerbottommargin=10pt, skipabove=5pt, skipbelow=5pt]
   \textbf{Celoštevilski linearni program za maksimizacijo geodetskega števila:} \\[3pt]
   Naj bo $ G \in \mathcal{G}(V,E)$ neusmerjen neutežen povezan enostaven označen graf
   nad $n$-timi vozlišči. Označimo $V(G) = \{ 1, \ldots n \}$ in 
   $E(G) \subseteq \{ e_{ij} \mid \forall \, i,j \in V(G): e_{ij} = (i,j) \}$. \\
-  Najti želimo graf z največjim geodetskim številom.
+  Najti smo želeli graf z največjim geodetskim številom.
 
   ciljna funkcija: 
   $ \textit{max} 
@@ -245,7 +245,7 @@ Računanja $gpn$ se lahko lotimo tudi z uporabo celoštevilskega linearnega prog
 
 \section{Eksperimentiranje in postavitev hipoteze}
 
-V eksperimentalnem koraku uporabimo zgornje module za generiranje grafov in izračun $gpn$ za različna števila vozlišč $n$. Za vsak razred generiranih grafov (dvodelni, kubični, brez trikotnikov in splošni grafi) zabeležimo število vozlišč, povezav in prešteto število $gpn$. Za grafe pridobljene iz spletne baze zaradi odsotnosti podatka o številu povezav analiziramo samo na podlagi vozlišč. Iz rezulatov izračunamo povrepčno, maksimalno in minimalno vrednost $gpn$ za vsak razred grafov in vsako število vozlišč (manjše od 10). Rezultate predstavimo v grafih \ref{vozlisca} in \ref{povezave}. V tabeli \ref{tab:max_gpn} so predstavljeni grafi z največjim številom $gpn$ za vsako število vozlišč od 1 do 10\footnote{V analizi je bilo vsakemu grafu dodeljeno unikatno ime. V primeru dvodelnega grafa je to \textit{bipartite\_x\_nodes\_y}, kjer je x število vozlišč in y zaporedna številka tvorjenja grafa.}.
+V eksperimentalnem koraku smo uporabili zgornje module za generiranje grafov in izračun $gpn$ za različna števila vozlišč $n$. Za vsak razred generiranih grafov (dvodelni, kubični, brez trikotnikov in splošni grafi) smo zabeležili število vozlišč, povezav in prešteto število $gpn$. Za grafe pridobljene iz spletne baze smo zaradi odsotnosti podatka o številu povezav analizirali samo na podlagi vozlišč. Iz rezulatov smo izračunali povprečno, maksimalno in minimalno vrednost $gpn$ za vsak razred grafov in vsako število vozlišč (manjše od 10). Rezultate smo predstavili v grafih \ref{vozlisca} in \ref{povezave}. V tabeli \ref{tab:max_gpn} so predstavljeni grafi z največjim številom $gpn$ za vsako število vozlišč od 1 do 10\footnote{V analizi je bilo vsakemu grafu dodeljeno unikatno ime. V primeru dvodelnega grafa je to \textit{bipartite\_x\_nodes\_y}, kjer je x število vozlišč in y zaporedna številka tvorjenja grafa.}.
 
 \begin{table}[htbp]
 \centering
@@ -283,16 +283,21 @@ V eksperimentalnem koraku uporabimo zgornje module za generiranje grafov in izra
     \label{povezave}
 \end{figure}
 
-V prvem grafu \ref{vozlisca} opazimo, da se število geodetskih podpoti povečuje z naraščajočim številom vozlišč za vse razrede grafov. Dvodelni grafi kažejo najvišje vrednosti $gpn$, sledijo jim splošni grafi, medtem ko kubični grafi dosegajo najnižje vrednosti $gpn$ za enako število vozlišč. Ker je število geodetskih podpoti močno odvisno od števila povezav, smo v drugem grafu \ref{povezave} prikazali $gpn$ glede na število povezav. Tudi tukaj dvodelni grafi izstopajo z najvišjimi vrednostmi $gpn$ za dano število povezav, medtem ko kubični grafi ostajajo na dnu lestvice. Opazimo tudi, da grafom $gpn$ s številom povezav narašča do neke točke, nato pa začne upadati. To se zgodi, ker na začetku z dodajanjem povezav ustvarjamo več alternativnih najkrajših poti med vozlišči, torej $gpn$ narašča, hkrati pa s tem manjšamo razdalje med njimi. Ko število povezav preseže določeno mejo (graf se bliža polnemu grafu), se razdalje med vozlišči zmanjšajo do te mere, da večina poti postane neposrednih (dolžine 1), kar vodi v zmanjšanje števila različnih najkrajših poti in s tem upad $gpn$.
+V prvem grafu \ref{vozlisca} smo opazili, da se je število geodetskih podpoti povečevalo z naraščajočim številom vozlišč za vse razrede grafov. Dvodelni grafi so kazali najvišje vrednosti $gpn$, sledili so jim splošni grafi, medtem ko so kubični grafi dosegali najnižje vrednosti $gpn$ za enako število vozlišč. Ker je število geodetskih podpoti močno odvisno od števila povezav, smo v drugem grafu \ref{povezave} prikazali $gpn$ glede na število povezav. Tudi tukaj so dvodelni grafi izstopali z najvišjimi vrednostmi $gpn$ za dano število povezav, medtem ko so kubični grafi ostajali na dnu lestvice. Opazili smo tudi, da $gpn$ grafom s številom povezav najprej naraščal do neke točke, nato pa je začel upadati. To se je zgodilo, ker smo na začetku z dodajanjem povezav ustvarjali več alternativnih najkrajših poti med vozlišči, torej je $gpn$ naraščal, hkrati pa s tem manjšali razdalje med njimi. Ko je število povezav preseglo določeno mejo (graf se je bližal polnemu grafu), so se razdalje med vozlišči zmanjšale do te mere, da je večina poti postala neposrednih (dolžine 1), kar je vodilo v zmanjšanje števila različnih najkrajših poti in s tem upad $gpn$.
 
 
-Hipotezo temeljimo na osnovi opažanja, da dvodelni grafi dosegajo najvišje vrednosti $gpn$. Ker so dvodelni grafi razred grafov brez trikotnikov (brez lihih ciklov) in ker grafi brez trikotnikov dosegajo visoke vrednosti $gpn$, sklepamo, da odsotnost trikotnikov prispeva k večjemu številu geodetskih poti.
+Hipotezo smo temeljili na osnovi opažanja, da so dvodelni grafi dosegali najvišje vrednosti $gpn$. Ker so dvodelni grafi razred grafov brez trikotnikov (brez lihih ciklov) in ker so grafi brez trikotnikov dosegali visoke vrednosti $gpn$, smo sklepali, da odsotnost trikotnikov prispeva k večjemu številu geodetskih poti. Poleg tega smo iz analize rezulatov opazili, da so optimalni tisti dvodelni grafi, ki so bili sorazmerno uravnoteženi glede na število vozlišč v obeh particijah in so imeli zmerno število povezav, kar je omogočalo več alternativnih najkrajših poti med vozlišči.
 
 
-Iz teh rezultatov postavimo sledečo hipotezo. \textit{Dvodelni grafi maksimizirajo število geodetskih podpoti med vsemi povezanimi grafi na n vozliščih}. 
+Iz teh rezultatov smo postavili sledečo hipotezo. \textit{Maksimalno število geodetskih podpoti v grafu z danim številom vozlišč $n$ dosežejo uravnoteženi dvodelni grafi s particijo vozlišč čim bolj enakomerne velikosti.
+Pri čemer velja: za sod $n=2k$ je optimalna particija $(k,k)$, za lih $n=2k+1$ je optimalna particija $(k,k+1)$. Poleg tega mora biti graf čim bolj regularen znotraj vsake particije, to je, da imajo vozlišča znotraj iste particije čim bolj enako stopnjo.}. 
 
 \section{Testiranje hipoteze na velikih grafih}
 
-\end{document}
+Za grafe z od 11 do 30 vozlišč smo uporabili metodo naključnega iskanja (angl. \textit{random search}), ki je izhajala iz hipoteze, da maksimalno število geodetskih podpoti dosegajo uravnoteženi dvodelni grafi. Pri vsaki velikosti smo generirali 10 000 naključnih grafov iz tega razreda in izračunali njihovo vrednost $gpn$. Končno rešitev je predstavljal graf z največjo vrednostjo $gpn$. Za manjše grafe (do 10 vozlišč) je ta pristop že podajal optimalne rezultate, kar je potrjevalo upravičenost izbora dvodelnih grafov.
 
-\import{preamble/}{init.tex}
+Za nadaljnjo optimizacijo smo razvili dvostopenjski hibridni postopek, ki je združeval naključno iskanje in simulirano žarjenje (angl. \textit{simulated annealing}, okrajšano SA). Najprej smo z naključnim iskanjem določili kvalitetnega začetnega kandidata, ki je nato postal začetno stanje za SA. Simulirano žarjenje je iterativno spreminjalo graf z osnovnimi operacijami: dodajanjem, odstranitvijo ali zamenjavo ene povezave, pri čemer je ohranilo dvodelnost in povezanost.
+
+Sprememba stanja je bila sprejeta, če je vrednost $gpn$ narasla; hkrati pa smo s pomočjo verjetnostnega mehanizma, ki je upadal s temperaturo, omogočali tudi prehod v stanje z nižjim $gpn$. Ta pristop je preprečeval ujetje v lokalne optimume in omogočal sistematično raziskovanje prostora rešitev. Pri grafih do 20 vozlišč je hibridna metoda dosegla povprečno izboljšanje $gpn$ za približno 5 \% v primerjavi s čistim naključnim iskanjem, kar je dokazovalo njeno učinkovitost.
+
+\end{document}
