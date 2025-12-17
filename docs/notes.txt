@@ -7,7 +7,7 @@ Graph features:
 graph generate nauty: https://doc-gitlab.sagemath.org/html/en/reference/graphs/sage/graphs/graph_generators.html
 graphs sequence: https://oeis.org/A001187
 all graphs download: https://users.cecs.anu.edu.au/~bdm/data/graphs.html
-
+regular bp graphs: https://arxiv.org/abs/1212.6882
 - bipartite graph
   - rule 1: have two disjoint and independent sets (parts) with vertices
   - rule 2: each edge connects two vertices from two sets (parts)
@@ -106,3 +106,20 @@ add this to report later:
 %
 % Compute energy of Initial temperature value:
 \end{document}
+
+shape: (1, 2)
+┌─────────────┬─────────┐
+│ id          ┆ gpn_num │
+│ ---         ┆ ---     │
+│ str         ┆ i64     │
+╞═════════════╪═════════╡
+│ J??E@w{}Fo? ┆ 209     │
+└─────────────┴─────────┘
+shape: (1, 2)
+┌──────────────┬─────────┐
+│ id           ┆ gpn_num │
+│ ---          ┆ ---     │
+│ str          ┆ i64     │
+╞══════════════╪═════════╡
+│ K??E@w{}Fo^? ┆ 303     │
+└──────────────┴─────────┘
