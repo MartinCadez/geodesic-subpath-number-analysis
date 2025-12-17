@@ -1,0 +1,82 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[slovene]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amssymb}
+\usepackage{enumitem}
+\usepackage{parskip}
+\usepackage{titling}
+
+\newtheorem{definition}{Definicija}
+
+\title{Število geodetskih podpoti: ekstremalni grafi}
+\newcommand{\subtitle}[1]{
+    \posttitle{
+        \par\large #1 \end{center}
+    }
+}
+\subtitle{Kratko poročilo projekta pri predmetu Finančni praktikum}
+\author{Nina Smole, Martin Čadež}
+\date{9. november 2025}
+
+\setlength{\droptitle}{-4em}
+
+\begin{document}
+
+\maketitle
+
+\section{Uvod in definicije pojmov}
+
+Cilj projekta je preučiti ekstremalne grafe glede na število geodetskih podpoti v različnih razredih grafov. Specifično nas zanima, kateri grafi dosežejo največjo možno vrednost $\text{gpn}(G)$ v naslednjih razredih povezanih grafov na $n$ vozliščih:
+
+\begin{itemize}
+    \item Dvodelni grafi
+    \item Grafi brez trikotnikov
+    \item Kubični grafi
+    \item Vsi grafi
+\end{itemize}
+
+Za lažje nadaljevanje, najprej definiramo osnovne pojme in koncepte uporabljene za reševanje problema.
+
+\begin{definition}
+    Za povezan graf $G$ definiramo \emph{število podpoti} kot število vseh poti v grafu, vključno s trivialnimi potmi dolžine 0. Tu definiramo \emph{pot} v grafu $G$ dolžine $\ell$ kot zaporedje vozlišč $(v_0, v_1, \ldots, v_\ell)$ brez ponovitev (tj. $v_i \neq v_j$ za vse $0 \leq i < j \leq \ell$) tako, da je vsak par zaporednih vozlišč povezan z povezavo grafa $G$ (tj. $v_{i-1}v_i$ je povezava grafa $G$ za vse $1 \leq i \leq \ell$).
+\end{definition}
+
+\begin{definition}
+    \emph{Število geodetskih podpoti} $\mathrm{gpn}(G)$ definiramo s štetjem le geodetskih poti. Torej, za povezan graf $G$ definiramo $\mathrm{gpn}(G)$ kot število vseh najkrajših poti v grafu, vključno s trivialnimi potmi dolžine 0.
+\end{definition}
+
+Invarianta $\mathrm{gpn}(G)$  je definirana za povezane grafe. Opazimo, da doseže svoj minimum pri drevesih. Posebaj za vsako drevo $T$ na $n$ vozliščih velja:
+\[
+\mathrm{gpn}(T) = \binom{n}{2}.
+\]
+
+\begin{definition}
+Graf $G$ je \emph{ekstremalen} glede na dano lastnost $P$ in razred grafov $\mathcal{C}$, če med vsemi grafi iz razreda $\mathcal{C}$ doseže največjo ali najmanjšo možno vrednost lastnosti $P$.
+\end{definition}
+
+V našem primeru se sprašujemo po ekstremalnih grafih ki maksimizirajo lastnost števila geodetskih podpoti $\mathrm{gpn}(G)$ v različnih razredih povezanih grafov na $n$ vozliščih.
+
+\begin{definition}
+    Graf $G = (V, E)$ je \emph{dvodelen}, če obstaja particija množice vozlišč $V = A \cup B$, kjer $A \cap B = \emptyset$, tako da za vsako povezavo $uv \in E$ velja $(u \in A \land v \in B) \lor (u \in B \land v \in A).$
+\end{definition}
+
+\begin{definition}
+    Graf $G$ je \emph{brez trikotnikov}, če ne vsebuje nobenega cikla dolžine 3 kot podgrafa.
+\end{definition}
+
+\begin{definition}
+    \emph{Kubični graf} je graf, v katerem je vsako vozlišče stopnje tri. Kubični graf je 3-regularen graf.
+\end{definition}
+
+\section{Načrt dela}
+
+Reševanja problema se bomo lotili na naslednji način:
+
+V prvem koraku bomo izvedli analizo grafov vseh navedenih razredov za majhna $(<10)$ števila vozlišč $n$. To nam bo omogočilo boljši vpogled v obnašanje grafov. V drugem koraku bomo na podlagi prejšnje analize postavili hipotezo o tem, kateri grafi so optimalni za poljubno število vozlišč $n$. V tretjem koraku bomo hipoteze preverili z uporabo stohastičnih metod, kot je simulirano žarjenje, za večja števila vozlišč.
+
+Za delo z grafi in njihovo reprezentacijo bomo uporabili Python knjižnico \textit{NetworkX}. Za generiranje grafov brez trikotnikov bomo uporabili \textit{SageMath}, ki omogoča delo z bolj kompleksnimi grafi in njihovo analizo.
+
+Ta pristop nam bo omogočil, da sistematično preučimo lastnosti števila geodetskih podpoti in identificiramo grafe, ki maksimizirajo to invarianto v različnih strukturnih razredih.
+
+\end{document}
