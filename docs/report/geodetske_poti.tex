@@ -112,6 +112,7 @@ V raziskavi se osredotočamo na naslednje strukturne razrede povezanih grafov:
 V prvem delu definiramo module za generiranje grafov treh zahtevanih tipov- dvodelnih, kubičnih in brez trikotnikov. Koda uporabi knjižnice SageMath, NetworkX in Matplotlib za generiranje, analizo in vizualizacijo grafov.
 
 \subsection{Generiranje grafov}
+Del (284 934) analiziranih grafov je bil pridobljen z uporabo spodaj opisanih modulov za generiranje grafov. Preostanek (11 721 442) je bil pridobljen iz baze podatkov\footnote{\url{https://hog.grinvin.org/https://users.cecs.anu.edu.au/~bdm/data/graphs.html}}.
 
 \textbf{Dvodelni grafi}
 
@@ -244,7 +245,7 @@ Računanja $gpn$ se lahko lotimo tudi z uporabo celoštevilskega linearnega prog
 
 \section{Eksperimentiranje in postavitev hipoteze}
 
-V eksperimentalnem koraku uporabimo zgornje module za generiranje grafov in izračun $gpn$ za različna števila vozlišč $n$. Za vsak razred grafov (dvodelni, kubični, brez trikotnikov in splošni grafi) zabeležimo število vozlišč, povezav in prešteto število $gpn$. Iz rezulatov izračunamo povrepčno, maksimalno in minimalno vrednost $gpn$ za vsak razred grafov in vsako število vozlišč (manjše od 10). Rezultate predstavimo v grafih \ref{vozlisca} in \ref{povezave}. V tabeli \ref{tab:max_gpn} so predstavljeni grafi z največjim številom $gpn$ za vsako število vozlišč od 1 do 10\footnote{V analizi je bilo vsakemu grafu dodeljeno unikatno ime. V primeru dvodelnega grafa je to \textit{bipartite\_x\_nodes\_y}, kjer je x število vozlišč in y zaporedna številka tvorjenja grafa.}.
+V eksperimentalnem koraku uporabimo zgornje module za generiranje grafov in izračun $gpn$ za različna števila vozlišč $n$. Za vsak razred generiranih grafov (dvodelni, kubični, brez trikotnikov in splošni grafi) zabeležimo število vozlišč, povezav in prešteto število $gpn$. Za grafe pridobljene iz spletne baze zaradi odsotnosti podatka o številu povezav analiziramo samo na podlagi vozlišč. Iz rezulatov izračunamo povrepčno, maksimalno in minimalno vrednost $gpn$ za vsak razred grafov in vsako število vozlišč (manjše od 10). Rezultate predstavimo v grafih \ref{vozlisca} in \ref{povezave}. V tabeli \ref{tab:max_gpn} so predstavljeni grafi z največjim številom $gpn$ za vsako število vozlišč od 1 do 10\footnote{V analizi je bilo vsakemu grafu dodeljeno unikatno ime. V primeru dvodelnega grafa je to \textit{bipartite\_x\_nodes\_y}, kjer je x število vozlišč in y zaporedna številka tvorjenja grafa.}.
 
 \begin{table}[htbp]
 \centering
@@ -282,7 +283,7 @@ V eksperimentalnem koraku uporabimo zgornje module za generiranje grafov in izra
     \label{povezave}
 \end{figure}
 
-V prvem grafu \ref{vozlisca} opazimo, da se število geodetskih podpoti povečuje z naraščajočim številom vozlišč za vse razrede grafov. Dvodelni grafi kažejo najvišje vrednosti $gpn$, sledijo jim splošni grafi, medtem ko kubični grafi dosegajo najnižje vrednosti $gpn$ za enako število vozlišč. Ker je število geodetskih podpoti močno odvisno od števila povezav, smo v drugem grafu \ref{povezave} prikazali $gpn$ glede na število povezav. Tudi tukaj dvodelni grafi izstopajo z najvišjimi vrednostmi $gpn$ za dano število povezav, medtem ko kubični grafi ostajajo na dnu lestvice.
+V prvem grafu \ref{vozlisca} opazimo, da se število geodetskih podpoti povečuje z naraščajočim številom vozlišč za vse razrede grafov. Dvodelni grafi kažejo najvišje vrednosti $gpn$, sledijo jim splošni grafi, medtem ko kubični grafi dosegajo najnižje vrednosti $gpn$ za enako število vozlišč. Ker je število geodetskih podpoti močno odvisno od števila povezav, smo v drugem grafu \ref{povezave} prikazali $gpn$ glede na število povezav. Tudi tukaj dvodelni grafi izstopajo z najvišjimi vrednostmi $gpn$ za dano število povezav, medtem ko kubični grafi ostajajo na dnu lestvice. Opazimo tudi, da grafom $gpn$ s številom povezav narašča do neke točke, nato pa začne upadati. To se zgodi, ker na začetku z dodajanjem povezav ustvarjamo več alternativnih najkrajših poti med vozlišči, torej $gpn$ narašča, hkrati pa s tem manjšamo razdalje med njimi. Ko število povezav preseže določeno mejo (graf se bliža polnemu grafu), se razdalje med vozlišči zmanjšajo do te mere, da večina poti postane neposrednih (dolžine 1), kar vodi v zmanjšanje števila različnih najkrajših poti in s tem upad $gpn$.
 
 
 Hipotezo temeljimo na osnovi opažanja, da dvodelni grafi dosegajo najvišje vrednosti $gpn$. Ker so dvodelni grafi razred grafov brez trikotnikov (brez lihih ciklov) in ker grafi brez trikotnikov dosegajo visoke vrednosti $gpn$, sklepamo, da odsotnost trikotnikov prispeva k večjemu številu geodetskih poti.
