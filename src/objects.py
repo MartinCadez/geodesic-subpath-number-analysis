@@ -289,6 +289,7 @@ class RandomBalancedBipartiteGraph:
         
         self._validate_args(num_nodes, edge_probability)
         self.graph = self._build_graph()
+        # self.graph.plot = lambda filename=None: plot(self.graph, filename)
 
     def __repr__(self) -> str:
         return f"RandomBalancedBipartiteGraph(num_nodes={self.num_nodes}, edge_probability={self.edge_probability})"
