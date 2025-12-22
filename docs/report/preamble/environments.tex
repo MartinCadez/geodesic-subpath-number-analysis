@@ -1,50 +1,89 @@
 \usepackage{xcolor}
-\usepackage[most]{tcolorbox}
 \usepackage{tikz}
 \usepackage{varwidth}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Hypothesis Environment
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\definecolor{hypothesis_background}{HTML}{faf5fc}
+\definecolor{hypothesis_accent}{HTML}{570e8c}
+\definecolor{hypothesis_title_box_background}{HTML}{e5d9f0}
+
+\newtcolorbox{hypothesis}[2][]{%
+    enhanced,
+    breakable,
+    colback = hypothesis_background,
+    frame hidden,
+    boxrule = 0pt,
+    borderline west = {2pt}{0pt}{hypothesis_accent},
+    rounded corners,
+    detach title,
+    before upper = {%
+        \hspace*{-0.7em}%
+        \raisebox{-0.7ex}{\tcbox[
+            enhanced,
+            size=small,
+            boxrule=1pt,
+            arc=3pt,
+            colback=hypothesis_title_box_background,
+            coltext=black,
+            boxsep=2.2pt
+        ]{\bfseries\slshape\footnotesize Hipoteza}}%
+        \hspace{0.5em}%
+        {\color{hypothesis_accent}\textbf{#2}}%
+        \par\smallskip
+    },
+    coltitle = hypothesis_accent,
+    fonttitle = \bfseries,
+    description font = \mdseries,
+    separator sign none,
+    segmentation style={solid, hypothesis_accent},
+    title = #2,
+    #1
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Definition Environment
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\definecolor{definition_background}{HTML}{fcf8f7}
-\definecolor{definition_accent}{HTML}{730a05}
-\definecolor{definition_title_mid_background}{HTML}{730a05}
-\definecolor{definition_title_left_background}{HTML}{b52922}
-\definecolor{definition_title_right_background}{HTML}{870c05}
-\definecolor{definition_title_text}{HTML}{faf5f5}
+\definecolor{definition_background}{HTML}{fafbfc}
+\definecolor{definition_accent}{HTML}{0a0569}
+\definecolor{definition_title_box_background}{HTML}{dadfeb}
 
 \newtcolorbox{definition}[2][]
-{enhanced,
-	before skip=2mm,
-    after skip=2mm,
-    colback=definition_background,
-    colframe=definition_accent,boxrule=0.5mm,
-	attach boxed title to top left={xshift=1cm,yshift*=1mm-\tcboxedtitleheight},
-    varwidth boxed title*=-3cm,
-	boxed title style={
-        frame code={
-        \path[fill=definition_title_left_background]
-            ([yshift=-1mm,xshift=-1mm]frame.north west)
-            arc[start angle=0,end angle=180,radius=1mm]
-            ([yshift=-1mm,xshift=1mm]frame.north east)
-            arc[start angle=180,end angle=0,radius=1mm];
-        \path[
-            left color=definition_title_left_background!80!definition_accent,  
-            right color=definition_title_right_background!60!definition_accent, 
-            middle color=definition_title_mid_background!60!definition_accent
-        ]
-            ([xshift=-2mm]frame.north west) -- ([xshift=2mm]frame.north east)
-            [rounded corners=1mm] -- ([xshift=1mm,yshift=-1mm]frame.north east)
-            -- (frame.south east) -- (frame.south west)
-            -- ([xshift=-1mm,yshift=-1mm]frame.north west)
-            [sharp corners]-- cycle;
-				},
-        interior engine=empty,
-	},
-	fonttitle=\bfseries,
-	coltitle=definition_title_text,
-	title={#2},#1}
+{%
+    enhanced,           
+    breakable,               
+    colback = definition_background,  
+    frame hidden,               
+    boxrule = 0sp,              
+    borderline west = {2pt}{0pt}{definition_accent},  
+    rounded corners,           
+    detach title,               
+    before upper = {%
+        \hspace*{-0.7em}%
+        \raisebox{-1ex}{\tcbox[
+            enhanced,
+            size=small,
+            boxrule=1pt,
+            arc=3pt,
+            colback=definition_title_box_background,
+            coltext=black,
+            boxsep=3pt
+        ]{\bfseries\slshape\footnotesize Definicija}}%
+        \hspace{0.5em}%
+        {\color{definition_accent}\textbf{#2}}%
+        \par\smallskip
+    },
+    coltitle = definition_accent,
+    fonttitle = \bfseries,      
+    description font = \mdseries,    
+    separator sign none,        
+    segmentation style={solid, definition_accent},
+    title = #2,
+    #1
+}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -320,4 +359,5 @@
     title = {#2},
     #1
 }
+
 

@@ -3,10 +3,135 @@
 \usepackage[letterpaper, margin=1in]{geometry}
 \usepackage{microtype}
 \usepackage{import}
-\import{preamble/}{init.tex}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
 
+\import{preamble/}{init.tex}
+\usepackage[
+  backend=biber,
+  style=authoryear,
+  natbib=true,
+  maxbibnames=99,
+  giveninits=true
+]{biblatex}
+
+\addbibresource{report.bib}
+
+\hbadness=100000
 
 \begin{document}
+\thispagestyle{empty}
+\customtitlepage{Število geodetskih podpoti}{Mentorja: Riste Škrekovski, Timotej Hrga }{Nina Smole, Martin Čadež}{2025}{\shortstack{Poročilo \\ Projekta}}
+\newpage
+
+\section{UVOD}
+
+Namen raziskave je bil sistematično preučiti ekstremalne grafe glede na
+število geodetskih podpoti (angl. \emph{geodesic path number},
+okrajšano $gpn$) za različne strukturne razrede povezanih grafov.
+Specifično nas je zanimala identifikacija grafov, ki v danem razredu dosežejo
+maksimalno možno vrednost $gpn$ za fiksno število vozlišč $n$. 
+
+Reševanja problema smo se lotili v treh glavnih korakih.
+V prvem koraku smo izvedli analizo števila geodetskih podpoti
+vseh enostavnih povezanih grafov z manj kot desetimi vozlišči.
+V drugem koraku smo na podlagi analize postavili hipotezo o tem,
+kateri grafi so optimalni za merilo dano $gpn$.
+V zadnjem koraku smo postavljeno hipotezo preverili z uporabo
+hevrističnih metod, za grafe z večjim število vozlišč.
+
+\section{TEORETIČNO OZADJE}
+Za natančno obravnavo problema si najprej poglejmo naslednje definicije:
+
+\begin{definition}{Pot grafa}
+  Naj bo $G$ povezan, enostaven graf. Pot dolžine $\ell$, je zaporedje
+  vozlišč $(v_0, v_1, \dots, v_\ell)$ brez ponovitev, kjer je vsak par
+  zaporednih vozlišč povezan s povezavo grafa $G$, tj:
+  $$
+  \forall \, i \in \{1, 2, \ldots, \ell \}: v_{i-1}v_i \in E(G) 
+  $$
+  Trivialna pot dolžine $0$ vsebuje eno vozlišče.
+\end{definition}
+
+\begin{definition}{Geodetska pot grafa}
+Naj bo $G$ povezan, enostaven graf, in naj bosta $u, v \in V(G)$
+dve vozlišči grafa.  Geodetska pot med $u$ in $v$ je pot 
+$(v_0, v_1, \dots, v_\ell)$, ki ima minimalno možno dolžino med vsemi potmi,
+ki povezujejo $u$ in $v$. 
+\end{definition}
+
+Dolžino geodetske poti označimo z $d_G(u,v)$ in jo imenujemo 
+\emph{razdalja} med $u$ in $v$.
+
+\begin{definition}{Število geodetskih podpoti}
+ Naj bo $G$ povezan, enostaven graf. Število geodetskih podpoti, označeno
+  $gpn(G)$, je definirano kot število vseh geodetskih (najkrajših) poti v 
+  grafu, vključno s trivialnimi potmi:
+  $$
+  \text{gpn}(G) = \sum_{u, v \, \in \, V(G)} \text{število geodetskih poti med } u \text{ in } v
+  $$
+\end{definition}
+  Torej za vsak par različnih vozlišč obstaja vsaj ena geodetska pot, 
+  ter za vsako vozlišče obstaja natanko ena trivialna pot.
+\newpage
+
+V raziskavi smo se osredotočili na naslednje strukturne razrede povezanih grafov:
+
+\begin{definition}{Dvodelni graf}
+Graf $G = (V, E)$ je \emph{dvodelen}, če obstaja razcep (particija) množice vozlišč
+$V = A \cup B$,  $A \cap B = \emptyset$, tako da za vsako povezavo
+$uv \in E(G)$ velja:
+$$
+\forall u, v \in V(G): (u \in A \land v \in B) \lor (u \in B \land v \in A)
+$$
+Torej, vse povezave povezujejo vozlišča iz različnih particij.
+\end{definition}
+
+\begin{definition}{Graf brez trikotnikov}
+  Graf $G$ je \emph{brez trikotnikov} (angl. triangle-free graph), če v njem ne obstaja cikel dolžine $3$,
+  torej če graf $G$ ne vsebuje podgrafa, izomorfnega ciklu $C_3$.
+\end{definition}
+
+\begin{claim}{Dvodelni grafi so brez trikotnikov}
+Vsak dvodelni graf je hkrati graf brez trikotnikov. Obratno ne velja.
+\end{claim}
+
+\begin{definition}{Kubičen graf}
+  Graf $G(V, E)$ je \emph{kubičen} (3-regularen), če ima vsako vozlišče stopnjo $3$:
+  $$
+  \forall \, v \in V(G): deg(G) = 3
+  $$
+  Torej vsako vozlišče je sosednje natanko trem vozliščem. Število povezav je enako: 
+  $$ 
+  |E(G)| = \frac{3 |V(G)|}{2}
+  $$
+\end{definition}
+
+\begin{claim}{Obstoj kubičnih grafov}
+Kubični grafi lahko obstajajo le na sodem številu vozlišč. 
+\end{claim}
+
+\begin{definition}{Ekstremalen graf}
+Naj bo $\mathcal{G}$ razred grafov in $P(G)$ neka invarianta (neodvisna lastnost
+grafa). Graf $G^{*}$ je ekstremalen glede na $P$, če velja:
+$$
+G^{*} = \arg\max_{G \in \mathcal{G}} P(G)
+$$
+ko želimo maksimizirati $P$ oziroma:
+$$
+G^{*} = \arg\min_{G \in \mathcal{G}} P(G)
+$$
+ko želimo minimizirati $P$.
+\end{definition}
+
+\newpage
+
+\section{DEFINICIJA PROBLEMA}
+V naši študiji smo iskali grafe, ki maksimizirajo invarianto $gpn(G)$ znotraj
+razreda enostavnih povezanih označenih (angl. \textit{labeled}) grafov na
+fiksnem številu vozlišč. Slednji problem lahko definiramo z naslednjim 
+celoštevilskim linearnim programom:
+
 \begin{mdframed}[backgroundcolor=color_blue_1!10, linecolor=color_blue_2, linewidth=2pt, roundcorner=10pt, innertopmargin=10pt, innerbottommargin=10pt, skipabove=5pt, skipbelow=5pt]
   \textbf{Celoštevilski Linearni Program za maksimizacijo geodetskega števila:} \\[3pt]
   Naj bo $ G \in \mathcal{G}(V,E)$ neusmerjen neutežen povezan enostaven označen graf
@@ -27,55 +152,55 @@
     \item definiramo vse matrike sosednosti za enostavne in povezane grafe
       \begin{itemize}
         \item $
-        \forall \, i,j \in \{1, \ldots n \}: \quad
-        x_{ij} =
-        \begin{cases}
-          1 & \! ; \, \, \,  e_{ij} \in E(G) \\
-          0 & \! ; \, \, \, sicer
-        \end{cases}
-        $ \quad (sestavimo matriko)
-      \item 
-      $
-      \sum\limits_{i < j} x_{ij} \geq n - 1
-      $ \quad
-      (graf je povezan)
-    \item
-      $
-      \forall \, i, j \in \{1, \ldots, n \}: x_{ij} = x_{ji}
-      $ \quad
-      (graf je neusmerjen)
-    \item
-      $
-      \forall i \in \{1, \ldots , n \}: x_{ii} = 0
-      $ \quad
-      (brez zank)
-    \item
-      $
-      \forall \, i ,j \in \{1, \ldots, n \} : x_{ij} \in \{0, 1\}
-      $ \quad 
-      (brez večkratnih povezav)
+          \forall \, i,j \in \{1, \ldots n \}: \quad
+          x_{ij} =
+          \begin{cases}
+            1 & \! ; \, \, \,  e_{ij} \in E(G) \\
+            0 & \! ; \, \, \, sicer
+          \end{cases}
+          $ \quad (sestavimo matriko)
+        \item 
+          $
+          \sum\limits_{i < j} x_{ij} \geq n - 1
+          $ \quad
+          (graf je povezan)
+        \item
+          $
+          \forall \, i, j \in \{1, \ldots, n \}: x_{ij} = x_{ji}
+          $ \quad
+          (graf je neusmerjen)
+        \item
+          $
+          \forall i \in \{1, \ldots , n \}: x_{ii} = 0
+          $ \quad
+          (brez zank)
+        \item
+          $
+          \forall \, i ,j \in \{1, \ldots, n \} : x_{ij} \in \{0, 1\}
+          $ \quad 
+          (brez večkratnih povezav)
       \end{itemize}
     \item definiramo funkcijsko odvisno spremenljivko od matrike sosednosti
       \begin{itemize}
         \item 
-        $
-        \forall \, i,j \in \{1, \ldots , n \}: \, \,
-        y_{ij} = \{\text{število najkrajših poti med vozliščema $i$ in $j$ }$\}
-      \item 
-        $
-        \forall i,j \in \{ 1, \ldots n\}, i < j: y_{ij} = 0
-        $ \quad
-        (vsako pot štejemo le enkrat)
-      \item 
-        $
-        \forall i \in \{ 1, \ldots n\}: y_{ii} = 1
-        $ \quad
-        (trivialne poti)
-      \item 
-        $
-        \forall \, i,j \in \{1, \ldots , n \}: \, \,
-        y_{ij} \in  \mathbb{N}
-        $
+          $
+          \forall \, i,j \in \{1, \ldots , n \}: \, \,
+          y_{ij} = \{\text{število najkrajših poti med vozliščema $i$ in $j$ }$\}
+        \item 
+          $
+          \forall i,j \in \{ 1, \ldots n\}, i < j: y_{ij} = 0
+          $ \quad
+          (vsako pot štejemo le enkrat)
+        \item 
+          $
+          \forall i \in \{ 1, \ldots n\}: y_{ii} = 1
+          $ \quad
+          (trivialne poti)
+        \item 
+          $
+          \forall \, i,j \in \{1, \ldots , n \}: \, \,
+          y_{ij} \in  \mathbb{N} \cup \{0\}
+          $
       \end{itemize}
   \end{enumerate}
 
@@ -84,16 +209,210 @@
   $
   (x_{ij}^*)_{i,j = 1}^n
   $
-  optimalna resitev, ki predstavlja graf $G^*$, je potem to rešitev problema.
+  optimalna rešitev, ki predstavlja graf $G^*$, je potem to rešitev problema.
   Pri tem je potrebno omeniti, da lahko za dani $n$ obstaja več
   neizomorfnih grafov, ki dosežejo optimum.
-  
+
 \end{mdframed}
+Ekspliciten primer reševanja programa je med prilogami. V programu smo
+predpostavili, da poznamo število najkrajših poti med poljubnima vozliščema,
+kar pa v splošnem ni trivialen problem, ki ga lahko rešimo v konstatnem času. 
+Potreben algoritem za izračun števila najkrajših poti, ter invariante $gpn$
+je prav tako med prilogami.
 
 \newpage
-\textbf{Primer za $n=3$:} \\
-(morda dodamo se plote kasneje vseh 8 možnosti, ali pa samo neizormorna
-grafa) \\
+
+\section{METODOLOGIJA REŠEVANJA PROBLEMA}
+Problema smo se lotili na sledeč način:
+
+\textbf{Razvojno okolje} (angl. \textit{development environment}): \\
+Ker je iskalni prostor (angl. search space) vseh enostavnih povezanih označenih grafov izjemno
+velik, število takih grafov za naraščajoče število vozlišč sledi zaporedju:
+$$
+1, \,\, 1, \,\, 2, \,\, 6, \,\, 21, \,\, 112, \,\, 853, \,\, 11117, \,\, 261080, \,\, 11716571, \, \ldots
+$$
+smo se naloge seveda lotili s pomočjo programskih jezikov in računalniške moči.
+Zaradi številnih
+sofisticiranih implementacij programske opreme za delo z grafi, smo se odločili,
+da uporabimo razvojno okolje \textbf{SageMath}. Slednjega smo vspostavili 
+s sistemom Docker, saj je namestitev neposredno na določene operacijske sisteme
+kot je Windows brez WSL-ja (Windows Subsystem for Linux) nepraktična.
+Torej, s pomočjo Docker-ja smo vzpostavili virtualni vsebnik (angl. container),
+v katerem smo izvedli celotno analizo. Z virtualizacijo smo si zagotivili 
+izolacijo okolja od gostiteljevega operacijskega sistema in enotno
+delovno okolje na različnih platformah. Artifakt Docker-jeve slike lahko
+najdete \href{https://github.com/MartinCadez/geodesic-subpath-number-analysis/blob/master/Dockerfile}{\textit{tukaj}}.
+
+\textbf{Generacija podatkov}: \\
+V prvem eksperimentalnem koraku smo morali definirati objekte iskalnega razreda. 
+Te smo za manjše grafe generirali lokalno sami, za večje grafe pa smo se poslužili
+te
+\href{https://users.cecs.anu.edu.au/~bdm/data/graphs.html}{\textit{zbirke grafov}}.
+
+V večji meri smo uporabili SageMath-ov modul \textit{nauty}, natančneje vmesnik
+\textit{nauty\_geng} programa \textbf{geng}, za učinkovito generiranje neizomorfnih grafov
+z določenimi lastnostmi. V prvotni fazi smo se osredotočili predvsem na tri
+strukturne razrede: kubične grafe, dvodelne grafe in grafe brez trikotnikov. 
+Za vsakega izmed teh razredov smo v programskem jeziku Python implementirali ustrezne razrede 
+(\textit{OOP class}),
+ki omogočajo generiranje vseh možnih grafov na determinističnem številu vozlišč.
+Omembe vredno je, da vsak razred vključuje lastnosti grafov ter možnost
+vizualizacije posameznega objekta iz razreda.
+Za enostavnejšo implementacijo smo uporabili knjižnici
+\textit{networkx} in \textit{matplotlib}.
+Izvorna koda se nahaja \href{https://github.com/MartinCadez/geodesic-subpath-number-analysis/blob/master/src/objects.py}{\textit{tukaj}}.
+
+Podrobneje, lokalno smo generirali vse neizomorfne enostavne povezane označene 
+grafe na do vključno devetih vozliščih. Za grafe z desetimi vozlišči, smo zaradi omejenih računalniških resursov,
+podatke naložili. Pri zgoraj omenjenih specifičnih strukturnih razredih, nismo
+imeli težav z generacijo, saj so te skupine bistveno manjše (za grafe $|V(G)| \geq 10$).
+Izvorna koda je dostopna \href{https://github.com/MartinCadez/geodesic-subpath-number-analysis/blob/master/src/analysis/data_generation.ipynb}{\textit{tukaj}}.
+
+Vsak graf smo enkodirali z \textbf{graph6} identifikacijskim ključem, saj 
+ta enolično določa vsak enostaven graf znotraj našega iskalnega prostora.
+
+\textbf{Izračun invariante}: \\
+Algoritem za izračun števila geodetskih podpoti je priložen med prilogami, 
+izvorna koda pa se nahaja 
+\href{https://github.com/MartinCadez/geodesic-subpath-number-analysis/blob/master/src/utils.py}{\textit{tukaj}}.
+
+Podatke smo shranili v datoteke formata \texttt{CSV} (Comma Separated Values), 
+ki smo jih po potrebi stisnili zaradi omejitev velikosti datotek na GitHub-u. 
+Pri tem smo uporabili poznano knjižnico za delo s podatki \textit{pandas}
+ter interaktivno računalniško okolje \textit{Jupyter Notebook}.
+
+\newpage
+Za olajšan pristop do podatkovnih zbirk so spodaj priložene povezave:
+\begin{itemize}
+  \item \href{https://github.com/MartinCadez/geodesic-subpath-number-analysis/blob/master/data/generated/all_graphs_9n.csv}{\textit{link}}: zbirka vseh enostavnih povezanih grafov na do vključno devetih vozliščih
+  \item \href{https://github.com/MartinCadez/geodesic-subpath-number-analysis/blob/dev/data/generated/gpn_values_for10n.zip}{\textit{link}}: zbirka vseh enostavnih povezanih grafov na desetih vozliščih
+  \item \href{https://github.com/MartinCadez/geodesic-subpath-number-analysis/blob/dev/data/generated/gpn_class_data.csv}{\textit{link}}: zbirka vseh grafov iz zgoraj omenjenih specifičnih strukturnih razredov
+  \item \href{https://github.com/MartinCadez/geodesic-subpath-number-analysis/blob/dev/data/generated/bp_graph_data_n11.csv}{\textit{link}}: zbirka vseh dvodelnih grafov na 11 vozliščih
+  \item \href{https://github.com/MartinCadez/geodesic-subpath-number-analysis/blob/dev/data/generated/bp_graph_data_n12.csv}{\textit{link}}: zbirka vseh dvodelnih grafov na 12 vozliščih
+\end{itemize}
+
+\textbf{Prečno iskanje} (angl. \textit{exhaustive search}): \\
+Na podlagi prvih treh opisanih podatkovnih zbirk smo iz razredov 
+izločili zgolj \textit{ekstremalne grafe} glede na invarianto $gpn$.
+Pri obdelavi in filtriranju podatkov smo ponovno uporabili knjižnico \textit{pandas}
+ter sodobnejšo knjižnico \textit{polars}, razvito v okviru rustovega ekosistema.
+Glavna prednost slednje je podpora lenega nalaganja
+(angl. \textit{lazy loading}), ki omogoča učinkovito filtriranje velikih CSV-datotek
+brez nepotrebne porabe virov.
+
+V spodnji tabeli so zbrani ekstremalni grafi za posamezen razred glede na
+število vozlišč:
+
+\begin{center}
+\begin{tcolorbox}[
+  tab,
+  width=\dimexpr\textwidth-1.69cm\relax,
+  tabularx={c | c | c | c | c | c | c}
+  ]
+  \rowcolor{color_blue_2}
+
+  graph6 ID & $|V(G)|$ & $|E(G)|$ & brez trikotnikov & dvodelen & kubičen & $gpn(G)$ \\\hline
+
+  \textit{@} & 1 & 0 & ja & ja & ne & 1 \\\hline
+  \textit{A\_} & 2 & 1 & ja & ja & ne & 3 \\\hline
+  \textit{BW} & 3 & 2 & ja & ja & ne & 6 \\\hline
+  \textit{Bw} & 3 & 3 & ne & ne & ne & 6 \\\hline
+  \textit{C]} & 4 & 4 & ja & ja & ne & 12 \\\hline
+  \textit{DFw} & 5 & 6 & ja & ja & ne & 20 \\\hline
+  \textit{EFz\_} & 6 & 9 & ja & ja & ja & 33 \\\hline
+  \textit{F?zv\_} & 7 & 11 & ja & ja & ne & 49 \\\hline
+  \textit{F?v\_} & 7 & 12 & ja & ja & ne & 49 \\\hline
+  \textit{G?zVf\_} & 8 & 14 & ja & ja & ne & 74 \\\hline
+  \textit{G?zvf\_} & 8 & 15 & ja & ja & ne & 74 \\\hline
+  \textit{H?BvUrw} & 9 & 17 & ja & ja & ne & 105 \\\hline
+  \textit{H?BvVrw} & 9 & 18 & ja & ja & ne & 105 \\\hline
+  \textit{H?ovfbo} & 9 & 16 & ja & ja & ne & 105 \\\hline
+\textit{I?BvUqw\}?} & 10 & 21 & ja & ja & ne & 151 \\\hline
+\end{tcolorbox}
+\end{center}
+
+Prikazi zgornjih grafov so priloženi v prilogi. Na podlagi tabele
+lahko podamo hipotezo:
+
+\begin{hypothesis}{Ekstremalni grafi za $gpn$}
+  Za razred enostavnih povezanih grafov nad $n$-timi vozlišči
+  so ekstremalni grafi dvodelni.
+\end{hypothesis}
+
+Slednjo lahko potrdimo že z diagramoma v prilogi, ki sta bila ustvarjena
+v okolju programskega jezika R z uporabo paketov iz skupine \textit{tidyverse}
+in paketa \textit{ggplot2} za vizualizacije. Izvorna koda se nahaja
+\href{https://github.com/MartinCadez/geodesic-subpath-number-analysis/blob/master/src/analysis/results_leq_10/analysis_nodes.r}{\textit{tukaj}}.
+
+\newpage
+
+Na podlagi hipoteze, smo prečno preiskali (angl. \textit{brute-force search}) vse
+dvodelne grafe na enajstih in dvanajstih vozliščih in dobili naslednje
+rezultate o ekstremalnih grafih:
+\begin{center}
+\begin{tcolorbox}[
+  tab,
+  width=\dimexpr\textwidth-0.85cm\relax,
+  tabularx={c | c | c | c | c | c | c}
+  ]
+  \rowcolor{color_blue_2}
+
+  graph6 ID & $|V(G)|$ & $|E(G)|$ & brez trikotnikov & dvodelen & kubičen & $gpn(G)$ \\\hline
+
+  \textit{J??E@w\{\}Fo?} & 11 & 20 & ja & ja & ne & 209 \\\hline
+  \textit{K??E@w\{\}Fo\^{}?} & 12 & 25 & ja & ja & ne & 303 \\\hline
+
+\end{tcolorbox}
+\end{center}
+
+Z dodatnim opazovanjem strukture optimalnih grafov, si lahko še dodatno skrčimo iskalni 
+prostor, saj opazimo da so grafi sistematično dvodelni:
+\begin{hypothesis}{Ekstremalni grafi za $gpn$}
+  Največje število geodetskih podpoti za razred enostavnih povezanih
+  grafov nad $n$-timi vozlišči dosežejo
+  \textbf{uravnoteženi dvodelni} in precej regularni grafi, kar pomeni da
+   je particija vozlišč čim bolj enakomerna:
+  \begin{itemize}
+    \item n je sod $\implies$ optimalna particija: $(k, k)$
+    \item n je lih $\implies$ optimalna particija: $(k, k+1)$
+  \end{itemize}
+\end{hypothesis}
+
+\textbf{Hevristične metode iskanja}: \\
+Na podlagi zgornje hipoteze smo implementirali razred, ki generira naključen
+uravnotežen dvodelen graf, pri katerem lahko stohastično uravnavamo
+pričakovano gostoto povezav. Izvorna koda se nahaja
+\href{https://github.com/MartinCadez/geodesic-subpath-number-analysis/blob/master/src/objects.py}{\textit{tukaj}}.
+
+Ker se je iskalni prostor znatno zmanjšal, smo za iskanje ekstremalnih večjih 
+grafov od 11 do vključno 30 vozlišči uporabili metodo naključnega iskanja
+(angl. \textit{random search}). Izvorna koda je dostopna \href{https://github.com/MartinCadez/geodesic-subpath-number-analysis/blob/master/src/analysis/eda.ipynb}{\textit{tukaj}}.
+Hevristični rezultati
+se nahajajo \href{https://github.com/MartinCadez/geodesic-subpath-number-analysis/blob/master/data/generated/heuristic_opt_gpn_larger_nodes.csv}{\textit{tukaj}}.
+
+Za nadaljnjo optimizacijo smo uporabili knjižnico \textit{simanneal},
+ki poenostavi implementacijo simuliranega žarjenja (angl. \textit{simulated annealing, SA}).
+Začetno stanje smo inicializirali z optimalnim grafom iz prejšnjega koraka. Vsako naslednje stanje smo dobili
+z majhno perturbacijo grafa, kjer smo z enakomerno porazdeljeno verjetnostjo odstranili, 
+dodali ali spremenili povezavo. 
+Izboljšani rezultati so dostopni \href{https://github.com/MartinCadez/geodesic-subpath-number-analysis/blob/master/data/generated/sa_opt_larger_nodes.csv}{\textit{tukaj}}.
+
+\textbf{Testiranje hipoteze}: \\
+Hipotezo smo preverili s Studentovim t-testom za dva neodvisna vzorca 
+(angl. \textit{Student’s two-sample t-test}) s pomočjo knjižnice \textit{scipy} z
+uporabo modula \textit{stats}. Za prvi vzorec smo izbrali grafe iz
+populacije vseh enostavnih povezanih grafov, za drugi pa le grafe, ki
+ustrezajo razredu, opisanemu v hipotezi. Ničelna hipoteza je predpostavljala,
+da je povprečje $gpn$ vrednosti uravnoteženih dvodelnih grafov večje od
+povprečja $gpn$ vrednosti grafov iz splošne populacije.
+Z uporabo 5-odstotne stopnje napake smo hipotezo potrdili.
+Izvorna koda je na voljo \href{https://github.com/MartinCadez/geodesic-subpath-number-analysis/blob/master/src/analysis/eda.ipynb}{\textit{tukaj}}.
+
+\newpage
+
+\textbf{\textit{Priloga s primeroma reševanja celoštevilskega linearnega programa}}:
+
+Za $|V|=3$ velja: \\
 Obstajata le dve dopustni matriki sosednosti:
 $$
 \text{$X_{P_3}$ =} 
@@ -114,7 +433,7 @@ $$
   1 & 1 & 0 \\ 
 \end{bmatrix}
 $$
-ter izpeljana matriki najkrajših poti:
+potem so izpeljane matrike najkrajših poti enake:
 $$
 \text{$Y_{P_3}$ =} 
 \quad
@@ -134,16 +453,13 @@ $$
   1 & 1 & 1 \\ 
 \end{bmatrix}
 $$
-in je zato 
+in so nato vrednosti objektivne funkcije enake: 
 $$
 gpn(P_3) = gpn(K_3) = \sum_{i=1}^3 \sum_{j=1}^3 y_{ij} = 6
 $$
 
-\newpage
-
-\textbf{Primer za n = 4 :} \\
-(dodam grafe ce je prav CLP) \\
-Obstaja 6 dopustih matrik sosednosti za neizomorne grafe:
+Za $|V|= 4$ velja: \\
+Obstaja 6 dopustih matrik sosednosti za vse neizomorfne grafe:
 $$
 X_{P_4} =
 \begin{bmatrix}
@@ -197,7 +513,7 @@ X_{K_4} =
 1 & 1 & 1 & 0\\ 
 \end{bmatrix}
 $$
-ter izpeljana matriki najkrajših poti:
+potem so izpeljane matrike najkrajših poti enake:
 $$
 Y_{P_4} =
 \begin{bmatrix}
@@ -251,61 +567,122 @@ Y_{K_4} =
 1 & 1 & 1 & 1\\ 
 \end{bmatrix}
 $$
-in so nato objektivne funkcije enake:
+in so nato vrednosti objektivne funkcije enake:
 $$
 gpn(P_4) = gpn(S_4) = gpn(K_{\text{diamant}}) = gpn(K_4) = 10, \quad
 gpn(K_4^{-}) = 11, \quad
 gpn(K_4) = 12
 $$
 
+% \newpage
+%
+% \textbf{\textit{Priloga z algoritmom $gpn$}}:
+
+% \begin{algorithm}
+% \caption{Štetje vseh najkrajših poti v grafu (GPN)}
+% \label{alg:gpn}
+%
+% \begin{algorithmic}
+% \Procedure{$gpn$}{$G = (V, E)$}
+%     \State $gpn \gets |V(G)|$
+%
+%     \For{ $\{u, v\} \in \binom{V(G)}{2}$}
+%         \State $gpn \gets gpn + 
+%         \text{stevilo_najkrajsih\_poti(u,v)}$
+%     \EndFor
+%
+%     \State \Return $gpn$
+% \EndProcedure
+% \end{algorithmic}
+% \end{algorithm}
+
 \newpage
-(enako kot za drevesa moremo se dokazat)
-\begin{claim}{Geodetsko število polnih grafov}
-  Naj bo $ K_n \in \mathcal{G}(V, E)$ poln graf z $n$-timi vozlišči, potem velja:
-  $$
-  gpn(K_n) = n + \binom{n}{2}
-  $$
-\end{claim}
+
+\textit{\textbf{Priloga z ekstremalnimi grafi}}:
+
+\begin{figure}[htbp!]
+\centering
+
+\begin{tabularx}{\textwidth}{@{}XXXX@{}}
+
+    \includegraphics[width=0.23\textwidth]{../figs/opt_graphs/@.png} &
+    \includegraphics[width=0.23\textwidth]{../figs/opt_graphs/A_.png} &
+    \includegraphics[width=0.23\textwidth]{../figs/opt_graphs/Bw.png} &
+    \includegraphics[width=0.23\textwidth]{../figs/opt_graphs/BW.png} \\
+
+    \includegraphics[width=0.23\textwidth]{../figs/opt_graphs/C].png} &
+    \includegraphics[width=0.23\textwidth]{../figs/opt_graphs/DFw.png} & 
+    \includegraphics[width=0.23\textwidth]{../figs/opt_graphs/EFz_.png} & 
+    \includegraphics[width=0.23\textwidth]{../figs/opt_graphs/F?zv_.png} \\
+
+    \includegraphics[width=0.23\textwidth]{../figs/opt_graphs/F?~v_.png} &
+    \includegraphics[width=0.23\textwidth]{../figs/opt_graphs/G?zVf_.png} &
+    \includegraphics[width=0.23\textwidth]{../figs/opt_graphs/G?zvf_.png} &
+    \includegraphics[width=0.23\textwidth]{../figs/opt_graphs/H?BvUrw.png} \\
+
+    \includegraphics[width=0.23\textwidth]{../figs/opt_graphs/H?ovfbo.png} &
+    \includegraphics[width=0.23\textwidth]{../figs/opt_graphs/H?BvVrw.png} &
+    \includegraphics[width=0.23\textwidth]{../figs/opt_graphs/opt_10n.png} & 
+    \includegraphics[width=0.23\textwidth]{../figs/opt_graphs/opt_graph_11.png} \\
+
+    \includegraphics[width=0.23\textwidth]{../figs/opt_graphs/opt_graph_12.png} & 
+\end{tabularx}
+\end{figure}
+
+\newpage
+
+\textit{\textbf{Priloga z diagrami statistične analize}}:
+
+Za vse obravnavane razrede grafov smo opazili monotono naraščanje števila 
+geodetskih podpoti s številom vozlišč, kar je dobro razvidno na črtnem diagramu:
+
+\vspace{-8pt}
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tcolorbox}[colframe=color_blue_2, colback=white, coltitle=black, arc=3mm, boxrule=0.4mm, width=0.65\textwidth] 
+    \includegraphics[width=\textwidth]{../figs/analysis/gpn_vs_vozlisca_10.jpg}
+  \end{tcolorbox}
+\end{figure}
+
+\vspace{-13pt}
+
+Na podlagi analize povprečnih vrednosti so se dvodelni grafi izkazali 
+kot optimalni razred, sledili so jim splošni grafi,
+medtem ko so kubični grafi dosegali najnižje vrednosti $gpn$ pri
+enakem številu vozlišč. Ker je invarianta $gpn$ precej odvisna od števila
+povezav že iz same definicije, smo v naslednjem diagramu prikazali glede 
+na število povezav. Poudariti je treba metodološki vidik analize,
+saj predstavljeni diagram prikazuje povprečne vrednosti $gpn$
+glede na število povezav za grafe, ki so bili generirani odvisnosti od števila
+vozlišč. Torej tukaj nismo obravnavali vseh možnih grafov na $m$-tih povezavah,
+temveč zgolj grafe z danim številom vozlišč, razvrščenih glede na število povezav.
+
+\vspace{-5pt}
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tcolorbox}[colframe=color_blue_2, colback=white, coltitle=black, arc=3mm, boxrule=0.4mm, width=0.65\textwidth] 
+    \includegraphics[width=\textwidth]{../figs/analysis/gpn_vs_povezave.jpg}
+  \end{tcolorbox}
+\end{figure}
+
+\vspace{-8pt}
+
+Iz diagrama je razvidno, da se povprečna vrednost $gpn$ z večanjem števila
+povezav najprej povečuje, doseže maksimum, nato pa začne upadati za splošen
+razred. Na začetku dodatne povezave ustvarjajo alternativne geodetske poti,
+kar vrednost $gpn$ povečuje. Vendar ko graf doseže preveliko gostoto povezav
+in se približa polnemu grafu, večina razdalj med vozlišči postane dolžine ena,
+kar posledično zmanjša število različnih najkrajših poti. Polni graf $K_n$,
+podobno kot drevesa, dosega minimalno vrednost $gpn$, tj. 
+$gpn(K_n) = \binom{n}{2} + n$. 
 
 % \newpage
-% \section{SIMULATED ANNEALING}
-% let $\mathcal{G} = \{ \text{all connected labeled simple graphs \} $ 
-% want: $arg max_{G \in \mathcal{G}} gpn(G)$ \\
-% search space: $ \mathcal{X} = \{ G(V, E) \in \mathcal{G} \mid |V| = n \}$ 
+%
+% \section{VIRI IN LITERATURA}
+%
+% \parencite{baeldung_simulated_annealing}
 
-% Energy function: $-gpn(G)$ (objective function), function to optimise/minimize
-%
-% Initial candidate solution: 
-% hevristic!
-% Path graph on n vertecies ($P_n$) coldest start, good for SA since 
-% its only up from here.
-%
-% Initial temperature value:
-% random! (fine-tunning for this value will letter be establish)
-%
-% Initial energy value: (Metropolis criterion)
-% $ \mathcal{P}(\text{accept}) = \exp{\frac{\Delta E}{k \cdot T}}$
-%
-% $
-% X: \Omega \to {0, 1}
-% $
-%
-% $ 
-% X_i(\omega) =
-% \begin{cases}
-%   1 ;& \text{$G_{\text{nov}} $ je sprejet v iteraciji $i$ pri izidu $\omega$ } \\
-%   0 ;& \text{sicer}
-% \end{cases}
-% $
-%
-% $$
-% \mathbb{P}(X_i = 1 \mid \Delta E, T) = 
-% \begin{cases}
-%   1 ;& \Delta E_i \leq 0 \\
-%   \exp{(\frac{\Delta E_i}{k \cdot T_i})} ;& \Delta E > 0 
-% \end{cases}
-% $$
-%
-%
-% Compute energy of Initial temperature value:
 \end{document}
+
