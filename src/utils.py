@@ -6,6 +6,7 @@ def gpn(
     G: nx.Graph,
     count_trivial: bool = True
     ) -> int:
+    """total number of shortest paths between all unordered pairs of nodes on a graph"""
     
     gpn = G.number_of_nodes() if count_trivial else 0
     nodes = list(G.nodes())
