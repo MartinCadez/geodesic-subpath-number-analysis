@@ -37,8 +37,8 @@ V prvem koraku smo izvedli analizo števila geodetskih podpoti
 vseh enostavnih povezanih grafov z manj kot desetimi vozlišči.
 V drugem koraku smo na podlagi analize postavili hipotezo o tem,
 kateri grafi so optimalni za merilo dano $gpn$.
-V zadnjem koraku smo postavljeno hipotezo preverili z uporabo
-hevrističnih metod, za grafe z večjim število vozlišč.
+V zadnjem koraku smo za grafe z večjim število vozlišč postavljeno hipotezo 
+preverili z uporabo hevrističnih metod.
 
 \section{TEORETIČNO OZADJE}
 Za natančno obravnavo problema si najprej poglejmo naslednje definicije:
@@ -71,7 +71,7 @@ Dolžino geodetske poti označimo z $d_G(u,v)$ in jo imenujemo
   \text{gpn}(G) = \sum_{u, v \, \in \, V(G)} \text{število geodetskih poti med } u \text{ in } v
   $$
 \end{definition}
-  Torej za vsak par različnih vozlišč obstaja vsaj ena geodetska pot, 
+  Torej za vsak par različnih vozlišč povezanega grafa obstaja vsaj ena geodetska pot, 
   ter za vsako vozlišče obstaja natanko ena trivialna pot.
 \newpage
 
@@ -131,94 +131,93 @@ V naši študiji smo iskali grafe, ki maksimizirajo invarianto $gpn(G)$ znotraj
 razreda enostavnih povezanih označenih (angl. \textit{labeled}) grafov na
 fiksnem številu vozlišč. Slednji problem lahko definiramo z naslednjim 
 celoštevilskim linearnim programom:
+% \begin{mdframed}[backgroundcolor=color_blue_1!10, linecolor=color_blue_2, linewidth=2pt, roundcorner=10pt, innertopmargin=10pt, innerbottommargin=10pt, skipabove=5pt, skipbelow=5pt]
+%   \textbf{Celoštevilski Linearni Program za maksimizacijo geodetskega števila:} \\[3pt]
+%   Naj bo $ G \in \mathcal{G}(V,E)$ neusmerjen neutežen povezan enostaven označen graf
+%   nad $n$-timi vozlišči. Označimo $V(G) = \{ 1, \ldots n \}$ in 
+%   $E(G) \subseteq \{ e_{ij} \mid \forall \, i,j \in V(G): e_{ij} = (i,j) \}$. \\
+%   Najti želimo graf z največjim geodetskim številom.
+%
+%   ciljna funkcija: 
+%   $ \textit{max} 
+%   \left( 
+%     \,\sum\limits_{i = 1}^{n} 
+%     \, \sum\limits_{j = 1}^{n}
+%     y_{ij}
+%   \right)
+%   $ \\
+%   kjer :
+%   \begin{enumerate}
+%     \item definiramo vse matrike sosednosti za enostavne in povezane grafe
+%       \begin{itemize}
+%         \item $
+%           \forall \, i,j \in \{1, \ldots n \}: \quad
+%           x_{ij} =
+%           \begin{cases}
+%             1 & \! ; \, \, \,  e_{ij} \in E(G) \\
+%             0 & \! ; \, \, \, sicer
+%           \end{cases}
+%           $ \quad (sestavimo matriko)
+%         \item 
+%           $
+%           \sum\limits_{i < j} x_{ij} \geq n - 1
+%           $ \quad
+%           (graf je povezan)
+%         \item
+%           $
+%           \forall \, i, j \in \{1, \ldots, n \}: x_{ij} = x_{ji}
+%           $ \quad
+%           (graf je neusmerjen)
+%         \item
+%           $
+%           \forall i \in \{1, \ldots , n \}: x_{ii} = 0
+%           $ \quad
+%           (brez zank)
+%         \item
+%           $
+%           \forall \, i ,j \in \{1, \ldots, n \} : x_{ij} \in \{0, 1\}
+%           $ \quad 
+%           (brez večkratnih povezav)
+%       \end{itemize}
+%     \item definiramo funkcijsko odvisno spremenljivko od matrike sosednosti
+%       \begin{itemize}
+%         \item 
+%           $
+%           \forall \, i,j \in \{1, \ldots , n \}: \, \,
+%           y_{ij} = \{\text{število najkrajših poti med vozliščema $i$ in $j$ }$\}
+%         \item 
+%           $
+%           \forall i,j \in \{ 1, \ldots n\}, i < j: y_{ij} = 0
+%           $ \quad
+%           (vsako pot štejemo le enkrat)
+%         \item 
+%           $
+%           \forall i \in \{ 1, \ldots n\}: y_{ii} = 1
+%           $ \quad
+%           (trivialne poti)
+%         \item 
+%           $
+%           \forall \, i,j \in \{1, \ldots , n \}: \, \,
+%           y_{ij} \in  \mathbb{N} \cup \{0\}
+%           $
+%       \end{itemize}
+%   \end{enumerate}
 
-\begin{mdframed}[backgroundcolor=color_blue_1!10, linecolor=color_blue_2, linewidth=2pt, roundcorner=10pt, innertopmargin=10pt, innerbottommargin=10pt, skipabove=5pt, skipbelow=5pt]
-  \textbf{Celoštevilski Linearni Program za maksimizacijo geodetskega števila:} \\[3pt]
-  Naj bo $ G \in \mathcal{G}(V,E)$ neusmerjen neutežen povezan enostaven označen graf
-  nad $n$-timi vozlišči. Označimo $V(G) = \{ 1, \ldots n \}$ in 
-  $E(G) \subseteq \{ e_{ij} \mid \forall \, i,j \in V(G): e_{ij} = (i,j) \}$. \\
-  Najti želimo graf z največjim geodetskim številom.
-
-  ciljna funkcija: 
-  $ \textit{max} 
-  \left( 
-    \,\sum\limits_{i = 1}^{n} 
-    \, \sum\limits_{j = 1}^{n}
-    y_{ij}
-  \right)
-  $ \\
-  kjer :
-  \begin{enumerate}
-    \item definiramo vse matrike sosednosti za enostavne in povezane grafe
-      \begin{itemize}
-        \item $
-          \forall \, i,j \in \{1, \ldots n \}: \quad
-          x_{ij} =
-          \begin{cases}
-            1 & \! ; \, \, \,  e_{ij} \in E(G) \\
-            0 & \! ; \, \, \, sicer
-          \end{cases}
-          $ \quad (sestavimo matriko)
-        \item 
-          $
-          \sum\limits_{i < j} x_{ij} \geq n - 1
-          $ \quad
-          (graf je povezan)
-        \item
-          $
-          \forall \, i, j \in \{1, \ldots, n \}: x_{ij} = x_{ji}
-          $ \quad
-          (graf je neusmerjen)
-        \item
-          $
-          \forall i \in \{1, \ldots , n \}: x_{ii} = 0
-          $ \quad
-          (brez zank)
-        \item
-          $
-          \forall \, i ,j \in \{1, \ldots, n \} : x_{ij} \in \{0, 1\}
-          $ \quad 
-          (brez večkratnih povezav)
-      \end{itemize}
-    \item definiramo funkcijsko odvisno spremenljivko od matrike sosednosti
-      \begin{itemize}
-        \item 
-          $
-          \forall \, i,j \in \{1, \ldots , n \}: \, \,
-          y_{ij} = \{\text{število najkrajših poti med vozliščema $i$ in $j$ }$\}
-        \item 
-          $
-          \forall i,j \in \{ 1, \ldots n\}, i < j: y_{ij} = 0
-          $ \quad
-          (vsako pot štejemo le enkrat)
-        \item 
-          $
-          \forall i \in \{ 1, \ldots n\}: y_{ii} = 1
-          $ \quad
-          (trivialne poti)
-        \item 
-          $
-          \forall \, i,j \in \{1, \ldots , n \}: \, \,
-          y_{ij} \in  \mathbb{N} \cup \{0\}
-          $
-      \end{itemize}
-  \end{enumerate}
-
-  \vspace{0.2cm}
-  Če je podan CLP dopusten za izbrano število vozlišč $n$ in je
-  $
-  (x_{ij}^*)_{i,j = 1}^n
-  $
-  optimalna rešitev, ki predstavlja graf $G^*$, je potem to rešitev problema.
-  Pri tem je potrebno omeniti, da lahko za dani $n$ obstaja več
-  neizomorfnih grafov, ki dosežejo optimum.
-
-\end{mdframed}
-Ekspliciten primer reševanja programa je med prilogami. V programu smo
-predpostavili, da poznamo število najkrajših poti med poljubnima vozliščema,
-kar pa v splošnem ni trivialen problem, ki ga lahko rešimo v konstatnem času. 
-Potreben algoritem za izračun števila najkrajših poti, ter invariante $gpn$
-je prav tako med prilogami.
+%   \vspace{0.2cm}
+%   Če je podan CLP dopusten za izbrano število vozlišč $n$ in je
+%   $
+%   (x_{ij}^*)_{i,j = 1}^n
+%   $
+%   optimalna rešitev, ki predstavlja graf $G^*$, je potem to rešitev problema.
+%   Pri tem je potrebno omeniti, da lahko za dani $n$ obstaja več
+%   neizomorfnih grafov, ki dosežejo optimum.
+%
+% \end{mdframed}
+% Ekspliciten primer reševanja programa je med prilogami. V programu smo
+% predpostavili, da poznamo število najkrajših poti med poljubnima vozliščema,
+% kar pa v splošnem ni trivialen problem, ki ga lahko rešimo v konstatnem času. 
+% Potreben algoritem za izračun števila najkrajših poti, ter invariante $gpn$
+% je prav tako med prilogami.
 
 \newpage
 
@@ -244,10 +243,10 @@ delovno okolje na različnih platformah. Artifakt Docker-jeve slike lahko
 najdete \href{https://github.com/MartinCadez/geodesic-subpath-number-analysis/blob/master/Dockerfile}{\textit{tukaj}}.
 
 \textbf{Generacija podatkov}: \\
-V prvem eksperimentalnem koraku smo morali definirati objekte iskalnega razreda. 
-Te smo za manjše grafe generirali lokalno sami, za večje grafe pa smo se poslužili
-te
-\href{https://users.cecs.anu.edu.au/~bdm/data/graphs.html}{\textit{zbirke grafov}}.
+V prvem eksperimentalnem koraku smo definirati objekte iskalnega razreda. 
+Te smo za manjše grafe lokalno generirali sami, za večje grafe pa smo se poslužili
+podatkovne zbirke \textit{Bruce D. McKay za grafe}, katere repozitorij je dostopen
+\href{https://users.cecs.anu.edu.au/~bdm/data/graphs.html}{\textit{tukaj}}.
 
 V večji meri smo uporabili SageMath-ov modul \textit{nauty}, natančneje vmesnik
 \textit{nauty\_geng} programa \textbf{geng}, za učinkovito generiranje neizomorfnih grafov
@@ -292,7 +291,7 @@ Za olajšan pristop do podatkovnih zbirk so spodaj priložene povezave:
 \end{itemize}
 
 \textbf{Prečno iskanje} (angl. \textit{exhaustive search}): \\
-Na podlagi prvih treh opisanih podatkovnih zbirk smo iz razredov 
+Na podlagi prvih treh zgoraj opisanih podatkovnih zbirk smo iz razredov 
 izločili zgolj \textit{ekstremalne grafe} glede na invarianto $gpn$.
 Pri obdelavi in filtriranju podatkov smo ponovno uporabili knjižnico \textit{pandas}
 ter sodobnejšo knjižnico \textit{polars}, razvito v okviru rustovega ekosistema.
