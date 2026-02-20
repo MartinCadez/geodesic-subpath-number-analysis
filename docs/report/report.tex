@@ -50,7 +50,7 @@
 
 \begin{document}
 \thispagestyle{empty}
-\customtitlepage{Število geodetskih podpoti}{Mentorja: Riste Škrekovski, Timotej Hrga }{Nina Smole, Martin Čadež}{2025}{\shortstack{Poročilo \\ Projekta}}
+\customtitlepage{Število geodetskih podpoti}{Mentorja: Riste Škrekovski, Timotej Hrga }{Nina Smole, Martin Čadež}{2026}{\shortstack{Poročilo \\ Projekta}}
 \newpage
 
 \section{UVOD}
@@ -334,28 +334,29 @@ V spodnji tabeli so zbrani ekstremalni grafi za posamezen razred glede na
 \begin{center}
 \begin{tcolorbox}[
   tab,
-  width=\dimexpr\textwidth-1.69cm\relax,
+  width=\dimexpr\textwidth-1.85cm\relax,
   tabularx={c | c | c | c | c | c | c}
   ]
   \rowcolor{color_blue_2}
 
   graph6 ID & $|V(G)|$ & $|E(G)|$ & brez trikotnikov & dvodelen & kubičen & $gpn(G)$ \\\hline
 
-  \textit{@} & 1 & 0 & ja & ja & ne & 1 \\\hline
-  \textit{A\_} & 2 & 1 & ja & ja & ne & 3 \\\hline
-  \textit{BW} & 3 & 2 & ja & ja & ne & 6 \\\hline
-  \textit{Bw} & 3 & 3 & ne & ne & ne & 6 \\\hline
-  \textit{C]} & 4 & 4 & ja & ja & ne & 12 \\\hline
-  \textit{DFw} & 5 & 6 & ja & ja & ne & 20 \\\hline
-  \textit{EFz\_} & 6 & 9 & ja & ja & ja & 33 \\\hline
-  \textit{F?zv\_} & 7 & 11 & ja & ja & ne & 49 \\\hline
-  \textit{F?v\_} & 7 & 12 & ja & ja & ne & 49 \\\hline
-  \textit{G?zVf\_} & 8 & 14 & ja & ja & ne & 74 \\\hline
-  \textit{G?zvf\_} & 8 & 15 & ja & ja & ne & 74 \\\hline
-  \textit{H?BvUrw} & 9 & 17 & ja & ja & ne & 105 \\\hline
-  \textit{H?BvVrw} & 9 & 18 & ja & ja & ne & 105 \\\hline
-  \textit{H?ovfbo} & 9 & 16 & ja & ja & ne & 105 \\\hline
-\textit{I?BvUqw\}?} & 10 & 21 & ja & ja & ne & 151 \\\hline
+  \texttt{@} & 1 & 0 & ja & ja & ne & 1 \\\hline
+  \texttt{A\_} & 2 & 1 & ja & ja & ne & 3 \\\hline
+  \texttt{BW} & 3 & 2 & ja & ja & ne & 6 \\\hline
+  \texttt{Bw} & 3 & 3 & ne & ne & ne & 6 \\\hline
+  \texttt{C]} & 4 & 4 & ja & ja & ne & 12 \\\hline
+  \texttt{DFw} & 5 & 6 & ja & ja & ne & 20 \\\hline
+  \texttt{EFz\_} & 6 & 9 & ja & ja & ja & 33 \\\hline
+  \texttt{F?zv\_} & 7 & 11 & ja & ja & ne & 49 \\\hline
+  \texttt{F?v\_} & 7 & 12 & ja & ja & ne & 49 \\\hline
+  \texttt{G?zVf\_} & 8 & 14 & ja & ja & ne & 74 \\\hline
+  \texttt{G?zvf\_} & 8 & 15 & ja & ja & ne & 74 \\\hline
+  \texttt{H?BvUrw} & 9 & 17 & ja & ja & ne & 105 \\\hline
+  \texttt{H?BvVrw} & 9 & 18 & ja & ja & ne & 105 \\\hline
+  \texttt{H?ovfbo} & 9 & 16 & ja & ja & ne & 105 \\\hline
+  \texttt{I?BvUqw\}?} & 10 & 21 & ja & ja & ne & 151 \\\hline
+
 \end{tcolorbox}
 \end{center}
 
@@ -380,15 +381,15 @@ rezultate o ekstremalnih grafih:
 \begin{center}
 \begin{tcolorbox}[
   tab,
-  width=\dimexpr\textwidth-0.85cm\relax,
+  width=\dimexpr\textwidth-1.20cm\relax,
   tabularx={c | c | c | c | c | c | c}
   ]
   \rowcolor{color_blue_2}
 
   graph6 ID & $|V(G)|$ & $|E(G)|$ & brez trikotnikov & dvodelen & kubičen & $gpn(G)$ \\\hline
 
-  \textit{J??E@w\{\}Fo?} & 11 & 20 & ja & ja & ne & 209 \\\hline
-  \textit{K??E@w\{\}Fo\^{}?} & 12 & 25 & ja & ja & ne & 303 \\\hline
+  \texttt{J??E@w\{\}Fo?} & 11 & 20 & ja & ja & ne & 209 \\\hline
+  \texttt{K??E@w\{\}Fo\^{}?} & 12 & 25 & ja & ja & ne & 303 \\\hline
 
 \end{tcolorbox}
 \end{center}
@@ -730,6 +731,65 @@ Izvorna koda je na voljo \href{https://github.com/MartinCadez/geodesic-subpath-n
 
 \newpage
 
+\textit{\textbf{Priloga z analizo ekstremalnih kubicnih grafov}}:
+
+Podrobneje smo  analizirali razred kubičnih grafov, čeprav
+ti globalno ne maksimizirajo števila $gpn$. Iskalni prostor je v tem razredu
+bistveno manjši, saj število neizomorfnih povezanih kubičnih grafov sledi 
+zaporedju:
+$$
+\,0, \,0, \,0, \,1, \,0, \,2, \,0, \,5, \,0, \,19, \,0, \,85, \,0, \,509, \,0, \,4060, \,0, \,41301, \,0, \,510489, \,0, \ldots
+$$
+Zaradi manjše velikosti skupin smo za vse kubične grafe do vključno 20 vozliščih
+izvedli prečno iskanje. Izvorna koda je na voljo \href{https://github.com/MartinCadez/geodesic-subpath-number-analysis/blob/dev/src/analysis/eda.ipynb}{\textit{tukaj}}.
+Pridobljene podatkovne zbirke so dostopne: 
+\begin{itemize}
+  \item \href{https://github.com/MartinCadez/geodesic-subpath-number-analysis/blob/dev/data/generated/cubic_graphs_upto18.csv}{\textit{link}}: zbirka vseh enostavnih povezanih kubičnih grafov na do vključno 18 vozliščih
+  \item \href{https://github.com/MartinCadez/geodesic-subpath-number-analysis/blob/dev/data/generated/cubic_graphs_on20_nodes.csv}{\textit{link}}: zbirka vseh enostavnih povezanih kubičnih grafov na 20 vozliščih
+\end{itemize}
+V spodnji tabeli so zbrani ekstremalni grafi za posamezen razred glede na število vozlišč:
+\begin{center}
+\begin{tcolorbox}[
+  tab,
+  width=\dimexpr\textwidth-0.80cm\relax,
+  tabularx={c | c | c | c | c | c | c}
+  ]
+  \rowcolor{color_blue_2}
+
+  graph6 ID & $|V(G)|$ & $|E(G)|$ & brez trikotnikov & dvodelen & $gpn(G)$ \\\hline
+
+    \texttt{\scriptsize C~} & 4 & 6 & ne & ne & 10 \\\hline
+    \texttt{\scriptsize EFz\_} & 6 & 9 & ja & ja & 33 \\\hline
+    \texttt{\scriptsize G?zTb\_} & 8 & 12 & ja & ja & 68 \\\hline
+    \texttt{\scriptsize I?Bcu`gM?} & 10 & 15 & ja & ja & 95 \\\hline
+    \texttt{\scriptsize K??FEagT@WB\_} & 12 & 18 & ja & ja & 162 \\\hline
+    \texttt{\scriptsize M??CBAQa\_wB\_X?WO?} & 14 & 21 & ne & ne & 221 \\\hline
+    \texttt{\scriptsize O???C@\_cSaB\_B\_B\_KOB@?} & 16 & 24 & ne & ne & 420 \\\hline
+    \texttt{\scriptsize Q????A?WC`R?EGB\_?w?M?WO@\_O?} & 18 & 27 & ne & ne & 594 \\\hline
+    \texttt{\scriptsize S??????\_B?QAaCF?B\_?M??w?B\_B@?B?O?} & 20 & 30 & ne & ne & 938 \\\hline
+\end{tcolorbox}
+\end{center}
+
+Vizualizacija ekstremalnih grafov iz preglednice:
+\begin{figure}[htbp!]
+\centering
+
+\begin{tabularx}{\textwidth}{@{}YYYYY@{}}
+  
+    \includegraphics[width=0.17\textwidth]{../figs/opt_graphs/extremal_cubic_4.png} &
+    \includegraphics[width=0.17\textwidth]{../figs/opt_graphs/extremal_cubic_6.png} &
+    \includegraphics[width=0.17\textwidth]{../figs/opt_graphs/extremal_cubic_8.png} &
+    \includegraphics[width=0.17\textwidth]{../figs/opt_graphs/extremal_cubic_10.png} &
+    \includegraphics[width=0.17\textwidth]{../figs/opt_graphs/extremal_cubic_12.png} &
+    \includegraphics[width=0.17\textwidth]{../figs/opt_graphs/extremal_cubic_14.png} &
+    \includegraphics[width=0.17\textwidth]{../figs/opt_graphs/extremal_cubic_16.png} &
+    \includegraphics[width=0.17\textwidth]{../figs/opt_graphs/extremal_cubic_18.png} &
+    \includegraphics[width=0.17\textwidth]{../figs/opt_graphs/extremal_cubic_20.png} &
+\end{tabularx}
+\end{figure}
+
+\newpage
+
 \textit{\textbf{Priloga z diagrami statistične analize}}:
 
 Za vse obravnavane razrede grafov smo opazili monotono naraščanje števila 
@@ -776,6 +836,8 @@ in se približa polnemu grafu, večina razdalj med vozlišči postane dolžine e
 kar posledično zmanjša število različnih najkrajših poti. Polni graf $K_n$,
 podobno kot drevesa, dosega minimalno vrednost $gpn$, tj. 
 $gpn(K_n) = \binom{n}{2} + n$. 
+
+
 
 % \newpage
 %
