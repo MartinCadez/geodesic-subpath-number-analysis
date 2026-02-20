@@ -107,3 +107,8 @@ cython_debug/
 *.snm
 *.pdf
 
+*.bbl-SAVE-ERROR
+*.bcf
+*.bcf-SAVE-ERROR
+*.run.xml
+
