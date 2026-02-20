@@ -206,9 +206,10 @@ G^* \in \arg\max_{G \in \mathcal{G}_n} gpn(G).
 $$
 kjer je:
 $$
-\mathcal{G}_n = \{ G = (V,E) \mid |V| = n,\; G \text{ enostaven, povezan, neutežen } \}
+\mathcal{G}_n = \{ G = (V,E) \mid |V| = n,\; G \text{ enostaven, povezan, neutežen  } \}
 $$
 \end{mdframed}
+Dodatno smo preučili razred kubičnih grafov. Analiza se nahaja v prilogah. 
 
 % \begin{mdframed}[backgroundcolor=color_blue_1!10, linecolor=color_blue_2, linewidth=2pt, roundcorner=10pt, innertopmargin=10pt, innerbottommargin=10pt, skipabove=5pt, skipbelow=5pt]
 %   \textbf{Celoštevilski Linearni Program za maksimizacijo geodetskega števila:} \\[3pt]
@@ -363,10 +364,10 @@ ter interaktivno računalniško okolje \textit{Jupyter Notebook}.
 Za olajšan pristop do podatkovnih zbirk so spodaj priložene povezave:
 \begin{itemize}
   \item \href{https://github.com/MartinCadez/geodesic-subpath-number-analysis/blob/master/data/generated/all_graphs_9n.csv}{\textit{link}}: zbirka vseh enostavnih povezanih grafov na do vključno devetih vozliščih
-  \item \href{https://github.com/MartinCadez/geodesic-subpath-number-analysis/blob/dev/data/generated/gpn_values_for10n.zip}{\textit{link}}: zbirka vseh enostavnih povezanih grafov na desetih vozliščih
-  \item \href{https://github.com/MartinCadez/geodesic-subpath-number-analysis/blob/dev/data/generated/gpn_class_data.csv}{\textit{link}}: zbirka vseh grafov iz zgoraj omenjenih specifičnih strukturnih razredov
-  \item \href{https://github.com/MartinCadez/geodesic-subpath-number-analysis/blob/dev/data/generated/bp_graph_data_n11.csv}{\textit{link}}: zbirka vseh dvodelnih grafov na 11 vozliščih
-  \item \href{https://github.com/MartinCadez/geodesic-subpath-number-analysis/blob/dev/data/generated/bp_graph_data_n12.csv}{\textit{link}}: zbirka vseh dvodelnih grafov na 12 vozliščih
+  \item \href{https://github.com/MartinCadez/geodesic-subpath-number-analysis/blob/master/data/generated/gpn_values_for10n.zip}{\textit{link}}: zbirka vseh enostavnih povezanih grafov na desetih vozliščih
+  \item \href{https://github.com/MartinCadez/geodesic-subpath-number-analysis/blob/master/data/generated/gpn_class_data.csv}{\textit{link}}: zbirka vseh grafov iz zgoraj omenjenih specifičnih strukturnih razredov
+  \item \href{https://github.com/MartinCadez/geodesic-subpath-number-analysis/blob/master/data/generated/bp_graph_data_n11.csv}{\textit{link}}: zbirka vseh dvodelnih grafov na 11 vozliščih
+  \item \href{https://github.com/MartinCadez/geodesic-subpath-number-analysis/blob/master/data/generated/bp_graph_data_n12.csv}{\textit{link}}: zbirka vseh dvodelnih grafov na 12 vozliščih
 \end{itemize}
 
 \textbf{Prečno iskanje} (angl. \textit{exhaustive search}): \\
@@ -791,11 +792,11 @@ $$
 \,0, \,0, \,0, \,1, \,0, \,2, \,0, \,5, \,0, \,19, \,0, \,85, \,0, \,509, \,0, \,4060, \,0, \,41301, \,0, \,510489, \,0, \ldots
 $$
 Zaradi manjše velikosti skupin smo za vse kubične grafe do vključno 20 vozliščih
-izvedli prečno iskanje. Izvorna koda je na voljo \href{https://github.com/MartinCadez/geodesic-subpath-number-analysis/blob/dev/src/analysis/eda.ipynb}{\textit{tukaj}}.
+izvedli prečno iskanje. Izvorna koda je na voljo \href{https://github.com/MartinCadez/geodesic-subpath-number-analysis/blob/master/src/analysis/eda.ipynb}{\textit{tukaj}}.
 Pridobljene podatkovne zbirke so dostopne: 
 \begin{itemize}
-  \item \href{https://github.com/MartinCadez/geodesic-subpath-number-analysis/blob/dev/data/generated/cubic_graphs_upto18.csv}{\textit{link}}: zbirka vseh enostavnih povezanih kubičnih grafov na do vključno 18 vozliščih
-  \item \href{https://github.com/MartinCadez/geodesic-subpath-number-analysis/blob/dev/data/generated/cubic_graphs_on20_nodes.csv}{\textit{link}}: zbirka vseh enostavnih povezanih kubičnih grafov na 20 vozliščih
+  \item \href{https://github.com/MartinCadez/geodesic-subpath-number-analysis/blob/master/data/generated/cubic_graphs_upto18.csv}{\textit{link}}: zbirka vseh enostavnih povezanih kubičnih grafov na do vključno 18 vozliščih
+  \item \href{https://github.com/MartinCadez/geodesic-subpath-number-analysis/blob/master/data/generated/cubic_graphs_on20_nodes.csv}{\textit{link}}: zbirka vseh enostavnih povezanih kubičnih grafov na 20 vozliščih
 \end{itemize}
 V spodnji preglednici so zbrani maksimalni ekstremalni kubični grafi glede na število vozlišč:
 \begin{center}
@@ -843,7 +844,7 @@ Vizualizacija ekstremalnih kubičnih grafov iz preglednice:
 
 V tem razredu nismo opazili specifičnih strukturnih lastnosti, zato smo izvedeli
 hevristično metodo naključnega iskanja na grafih od 22 do vključno 30 vozliščih.
-Izvorna koda je dostopna \href{https://github.com/MartinCadez/geodesic-subpath-number-analysis/blob/dev/src/analysis/eda.ipynb}{\textit{tukaj}}, rezultati pa \href{https://github.com/MartinCadez/geodesic-subpath-number-analysis/blob/dev/data/generated/heuristic_cubic_from22_to30.csv}{\textit{tukaj}} 
+Izvorna koda je dostopna \href{https://github.com/MartinCadez/geodesic-subpath-number-analysis/blob/master/src/analysis/eda.ipynb}{\textit{tukaj}}, rezultati pa \href{https://github.com/MartinCadez/geodesic-subpath-number-analysis/blob/master/data/generated/heuristic_cubic_from22_to30.csv}{\textit{tukaj}} 
 
 \newpage
 
