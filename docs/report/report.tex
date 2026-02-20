@@ -158,8 +158,58 @@ ko želimo minimizirati $P$.
 \section{DEFINICIJA PROBLEMA}
 V naši študiji smo iskali grafe, ki maksimizirajo invarianto $gpn(G)$ znotraj
 razreda enostavnih povezanih označenih (angl. \textit{labeled}) grafov na
-fiksnem številu vozlišč. Slednji problem lahko definiramo z naslednjim 
-celoštevilskim linearnim programom:
+fiksnem številu vozlišč, saj velja:
+
+\begin{claim}{GPN število drevesa}
+Naj bo $T = (V,E)$ neuteženo drevo. Potem velja:
+$$
+gpn(T) = \binom{|V|}{2} + |V|
+$$
+\end{claim}
+kjer člen $\binom{|V|}{2}$ predstavlja število geodetskih poti med
+različnimi pari vozlišč, člen $|V|$ pa število trivialnih poti, 
+ki ustrezajo posameznim vozliščem. Izkaže se:
+
+\begin{claim}{Drevesa minimizirajo število GPN}
+Naj bo $\mathcal{G}_n$ razred vseh
+enostavnih, povezanih, neuteženih grafov na $n \in \mathbb{N}$ vozliščih.
+Potem velja:
+$$
+\text{arg} \min_{G \in \mathcal{G}_n} gpn(G) = \binom{n}{2} + n
+$$
+oziroma za poljubno drevo $T \in \mathcal{G}_n$:
+$$
+\forall \, G \in \mathcal{G}_n: gpn(T) \leq gpn(G)
+$$
+\end{claim}
+Zato se v nadaljevanju osredotočimo na iskanje grafov,
+ki invarianto $gpn$ maksimizirajo.
+
+Ker funkcija $gpn$ ni linearna in niti konveksna
+problem spada med diskretne nelinearne kombinatorične
+optimizacijske probleme:
+
+\begin{mdframed}[
+  backgroundcolor=color_blue_1!10,
+  linecolor=color_blue_2,
+  linewidth=2pt,
+  roundcorner=10pt,
+  innertopmargin=10pt,
+  innerbottommargin=10pt,
+  skipabove=5pt,
+  skipbelow=5pt
+  ]
+  \textbf{Problem:} \texttt{Iskanje maksimalnih ekstremnih grafov glede na $gpn$} \\
+Iščemo množico grafov $G^* \in \mathcal{G}_n$, za katere velja:
+$$
+G^* \in \arg\max_{G \in \mathcal{G}_n} gpn(G).
+$$
+kjer je:
+$$
+\mathcal{G}_n = \{ G = (V,E) \mid |V| = n,\; G \text{ enostaven, povezan, neutežen } \}
+$$
+\end{mdframed}
+
 % \begin{mdframed}[backgroundcolor=color_blue_1!10, linecolor=color_blue_2, linewidth=2pt, roundcorner=10pt, innertopmargin=10pt, innerbottommargin=10pt, skipabove=5pt, skipbelow=5pt]
 %   \textbf{Celoštevilski Linearni Program za maksimizacijo geodetskega števila:} \\[3pt]
 %   Naj bo $ G \in \mathcal{G}(V,E)$ neusmerjen neutežen povezan enostaven označen graf
@@ -731,7 +781,7 @@ Izvorna koda je na voljo \href{https://github.com/MartinCadez/geodesic-subpath-n
 
 \newpage
 
-\textit{\textbf{Priloga z analizo ekstremalnih kubicnih grafov}}:
+\textit{\textbf{Priloga z analizo ekstremalnih kubičnih grafov}}:
 
 Podrobneje smo  analizirali razred kubičnih grafov, čeprav
 ti globalno ne maksimizirajo števila $gpn$. Iskalni prostor je v tem razredu
@@ -747,7 +797,7 @@ Pridobljene podatkovne zbirke so dostopne:
   \item \href{https://github.com/MartinCadez/geodesic-subpath-number-analysis/blob/dev/data/generated/cubic_graphs_upto18.csv}{\textit{link}}: zbirka vseh enostavnih povezanih kubičnih grafov na do vključno 18 vozliščih
   \item \href{https://github.com/MartinCadez/geodesic-subpath-number-analysis/blob/dev/data/generated/cubic_graphs_on20_nodes.csv}{\textit{link}}: zbirka vseh enostavnih povezanih kubičnih grafov na 20 vozliščih
 \end{itemize}
-V spodnji tabeli so zbrani ekstremalni grafi za posamezen razred glede na število vozlišč:
+V spodnji preglednici so zbrani maksimalni ekstremalni kubični grafi glede na število vozlišč:
 \begin{center}
 \begin{tcolorbox}[
   tab,
@@ -770,23 +820,30 @@ V spodnji tabeli so zbrani ekstremalni grafi za posamezen razred glede na števi
 \end{tcolorbox}
 \end{center}
 
-Vizualizacija ekstremalnih grafov iz preglednice:
+Vizualizacija ekstremalnih kubičnih grafov iz preglednice:
 \begin{figure}[htbp!]
 \centering
+\begin{tabularx}{\textwidth}{@{}XXXXX@{}}
 
-\begin{tabularx}{\textwidth}{@{}YYYYY@{}}
-  
-    \includegraphics[width=0.17\textwidth]{../figs/opt_graphs/extremal_cubic_4.png} &
-    \includegraphics[width=0.17\textwidth]{../figs/opt_graphs/extremal_cubic_6.png} &
-    \includegraphics[width=0.17\textwidth]{../figs/opt_graphs/extremal_cubic_8.png} &
-    \includegraphics[width=0.17\textwidth]{../figs/opt_graphs/extremal_cubic_10.png} &
-    \includegraphics[width=0.17\textwidth]{../figs/opt_graphs/extremal_cubic_12.png} &
-    \includegraphics[width=0.17\textwidth]{../figs/opt_graphs/extremal_cubic_14.png} &
-    \includegraphics[width=0.17\textwidth]{../figs/opt_graphs/extremal_cubic_16.png} &
-    \includegraphics[width=0.17\textwidth]{../figs/opt_graphs/extremal_cubic_18.png} &
-    \includegraphics[width=0.17\textwidth]{../figs/opt_graphs/extremal_cubic_20.png} &
+\includegraphics[width=0.18\textwidth]{../figs/opt_graphs/extremal_cubic_4.png} &
+\includegraphics[width=0.18\textwidth]{../figs/opt_graphs/extremal_cubic_6.png} &
+\includegraphics[width=0.18\textwidth]{../figs/opt_graphs/extremal_cubic_8.png} &
+\includegraphics[width=0.18\textwidth]{../figs/opt_graphs/extremal_cubic_10.png} &
+\includegraphics[width=0.18\textwidth]{../figs/opt_graphs/extremal_cubic_12.png} \\
+
+\includegraphics[width=0.18\textwidth]{../figs/opt_graphs/extremal_cubic_14.png} &
+\includegraphics[width=0.18\textwidth]{../figs/opt_graphs/extremal_cubic_16.png} &
+\includegraphics[width=0.18\textwidth]{../figs/opt_graphs/extremal_cubic_18.png} &
+\includegraphics[width=0.18\textwidth]{../figs/opt_graphs/extremal_cubic_20.png} &
+{} 
+
 \end{tabularx}
+
 \end{figure}
+
+V tem razredu nismo opazili specifičnih strukturnih lastnosti, zato smo izvedeli
+hevristično metodo naključnega iskanja na grafih od 22 do vključno 30 vozliščih.
+Izvorna koda je dostopna \href{https://github.com/MartinCadez/geodesic-subpath-number-analysis/blob/dev/src/analysis/eda.ipynb}{\textit{tukaj}}, rezultati pa \href{https://github.com/MartinCadez/geodesic-subpath-number-analysis/blob/dev/data/generated/heuristic_cubic_from22_to30.csv}{\textit{tukaj}} 
 
 \newpage
 
