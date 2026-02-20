@@ -1,0 +1,95 @@
+\documentclass[a4paper,english]{article}
+\usepackage[margin=3cm]{geometry}
+
+\usepackage{xcolor, amsmath}
+\definecolor{amaranth}{rgb}{0.9, 0.17, 0.31}
+\colorlet{green}{green!20}
+\colorlet{yellow}{yellow!60}
+\colorlet{red}{red!30}
+
+\usepackage{setspace}
+\usepackage[linesnumbered,ruled,vlined]{algorithm2e}
+\renewcommand{\KwSty}[1]{\textnormal{\textcolor{amaranth!90!black}{\bfseries #1}}\unskip}
+\renewcommand{\ArgSty}[1]{\textnormal{\ttfamily #1}\unskip}
+\SetKwComment{Comment}{\color{green!80!black!190}// }{}
+\renewcommand{\CommentSty}[1]{\textnormal{\ttfamily\color{green!80!black!190}#1}\unskip}
+\newcommand{\var}{\texttt}
+\newcommand{\FuncCall}[2]{\texttt{\bfseries #1(#2)}}
+\SetKwProg{Function}{function}{}{}
+\SetKw{Continue}{continue}
+\renewcommand{\ProgSty}[1]{\texttt{\bfseries #1}}
+\DontPrintSemicolon
+\SetAlFnt{\small}
+\SetAlgorithmName{Pseudocode}{algorithmautorefname}
+
+\usepackage{tikz}
+\usetikzlibrary{fit,calc}
+
+\newcommand{\boxit}[2]{
+    \tikz[remember picture,overlay] \node (A) {};\ignorespaces
+    \tikz[remember picture,overlay]{\node[yshift=3pt,fill=#1,opacity=.25,fit={($(A)+(0,0.15\baselineskip)$)($(A)+(.9\linewidth,-{#2}\baselineskip - 0.25\baselineskip)$)}] {};}\ignorespaces
+}
+\newcommand{\boxitt}[2]{
+    \tikz[remember picture,overlay] \node (A) {};\ignorespaces
+    \tikz[remember picture,overlay]{\node[yshift=3pt,fill=#1,opacity=.25,fit={($(A)+(0,0.15\baselineskip)$)($(A)+(.858\linewidth,-{#2}\baselineskip - 0.25\baselineskip)$)}] {};}\ignorespaces
+}
+
+\usepackage{algpseudocode}
+
+
+\begin{document}
+
+\begin{algorithm}
+  \Function{GPN($G=(V,E)$, count\_trivial)}{
+
+    \eIf{count\_trivial}{
+        $T \leftarrow |V|$\;
+    }{
+        $T \leftarrow 0$\;
+    }
+
+    \ForEach{$s \in V$}{
+
+        \ForEach{$v \in V$}{
+            \tcp{najkrajša razdalja od $s$ do $v$}
+            $d_G(s,v) \leftarrow \infty$\; 
+            \tcp{število najkrajših poti od $s$ do $v$}
+            $\sigma_s(v) \leftarrow 0$\;
+        }
+        $d_G(s,s) \leftarrow 0$\;
+        $\sigma_s(s) \leftarrow 1$\;
+        \tcp{FIFO vrsta (queue)}
+        $Q \leftarrow \emptyset$\;
+        $\text{enqueue}(Q,s)$\;
+
+        \tcp{BFS}
+        \While{$Q \neq \emptyset$}{
+            $u \leftarrow \text{dequeue}(Q)$\;
+
+            \ForEach{$w \in \text{Adj}(u)$}{
+
+             \tcp{prvič odkrijemo vozlišče $w$}
+                \If{$d_G(s,w) = \infty$}{
+                    $d_G(s,w) \leftarrow d_G(s,u) + 1$\; 
+                    $\sigma_s(w) \leftarrow \sigma_s(u)$\; 
+                    $\text{enqueue}(Q,w)$\;
+                }
+
+               \tcp{$w$ smo že obiskali na najkrajši razdalji}
+                \If{$d_G(s,w) = d_G(s,u) + 1$}{
+                    $\sigma_s(w) \leftarrow \sigma_s(w) + \sigma_s(u)$\; 
+                }
+            }
+        }
+
+        \tcp{preštejemo vse neurejene pare vozlišča $u$}
+        \ForEach{$t \in V \;:\; t > s$}{
+            $T \leftarrow T + \sigma_s(t)$\;
+        }
+    }
+
+    \Return{$T$}\;
+  }
+\end{algorithm}
+\end{document}
+
